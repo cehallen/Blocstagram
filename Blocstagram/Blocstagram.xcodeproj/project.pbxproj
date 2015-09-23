@@ -17,10 +17,13 @@
 		F116E5F91BB1A58400AC9FD6 /* 8.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = F116E5EF1BB1A58400AC9FD6 /* 8.jpeg */; settings = {ASSET_TAGS = (); }; };
 		F116E5FA1BB1A58400AC9FD6 /* 9.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = F116E5F01BB1A58400AC9FD6 /* 9.jpeg */; settings = {ASSET_TAGS = (); }; };
 		F116E5FB1BB1A58400AC9FD6 /* 10.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = F116E5F11BB1A58400AC9FD6 /* 10.jpeg */; settings = {ASSET_TAGS = (); }; };
+		F116E5FE1BB21E9700AC9FD6 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = F116E5FD1BB21E9700AC9FD6 /* User.m */; settings = {ASSET_TAGS = (); }; };
+		F116E6011BB21F4300AC9FD6 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = F116E6001BB21F4300AC9FD6 /* Media.m */; settings = {ASSET_TAGS = (); }; };
+		F116E6041BB220B100AC9FD6 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = F116E6031BB220B100AC9FD6 /* Comment.m */; settings = {ASSET_TAGS = (); }; };
+		F116E6071BB2232000AC9FD6 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F116E6061BB2232000AC9FD6 /* DataSource.m */; settings = {ASSET_TAGS = (); }; };
 		F18691821BB1016C0054A914 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F18691811BB1016C0054A914 /* main.m */; };
 		F18691851BB1016C0054A914 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F18691841BB1016C0054A914 /* AppDelegate.m */; };
 		F186918D1BB1016C0054A914 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F186918C1BB1016C0054A914 /* Assets.xcassets */; };
-		F18691901BB1016C0054A914 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F186918E1BB1016C0054A914 /* LaunchScreen.storyboard */; };
 		F186919B1BB1016C0054A914 /* BlocstagramTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F186919A1BB1016C0054A914 /* BlocstagramTests.m */; };
 		F18691A61BB1016C0054A914 /* BlocstagramUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F18691A51BB1016C0054A914 /* BlocstagramUITests.m */; };
 		F18691CC1BB187630054A914 /* ImagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F18691CB1BB187630054A914 /* ImagesTableViewController.m */; settings = {ASSET_TAGS = (); }; };
@@ -54,12 +57,19 @@
 		F116E5EF1BB1A58400AC9FD6 /* 8.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 8.jpeg; sourceTree = "<group>"; };
 		F116E5F01BB1A58400AC9FD6 /* 9.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 9.jpeg; sourceTree = "<group>"; };
 		F116E5F11BB1A58400AC9FD6 /* 10.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 10.jpeg; sourceTree = "<group>"; };
+		F116E5FC1BB21E9700AC9FD6 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = ../User.h; sourceTree = "<group>"; };
+		F116E5FD1BB21E9700AC9FD6 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = ../User.m; sourceTree = "<group>"; };
+		F116E5FF1BB21F4300AC9FD6 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
+		F116E6001BB21F4300AC9FD6 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
+		F116E6021BB220B100AC9FD6 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		F116E6031BB220B100AC9FD6 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		F116E6051BB2232000AC9FD6 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
+		F116E6061BB2232000AC9FD6 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
 		F186917D1BB1016C0054A914 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F18691811BB1016C0054A914 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F18691831BB1016C0054A914 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F18691841BB1016C0054A914 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		F186918C1BB1016C0054A914 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F186918F1BB1016C0054A914 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F18691911BB1016C0054A914 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F18691961BB1016C0054A914 /* BlocstagramTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlocstagramTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F186919A1BB1016C0054A914 /* BlocstagramTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlocstagramTests.m; sourceTree = "<group>"; };
@@ -141,8 +151,15 @@
 				F18691841BB1016C0054A914 /* AppDelegate.m */,
 				F18691CA1BB187630054A914 /* ImagesTableViewController.h */,
 				F18691CB1BB187630054A914 /* ImagesTableViewController.m */,
+				F116E5FC1BB21E9700AC9FD6 /* User.h */,
+				F116E5FD1BB21E9700AC9FD6 /* User.m */,
+				F116E5FF1BB21F4300AC9FD6 /* Media.h */,
+				F116E6001BB21F4300AC9FD6 /* Media.m */,
+				F116E6021BB220B100AC9FD6 /* Comment.h */,
+				F116E6031BB220B100AC9FD6 /* Comment.m */,
+				F116E6051BB2232000AC9FD6 /* DataSource.h */,
+				F116E6061BB2232000AC9FD6 /* DataSource.m */,
 				F186918C1BB1016C0054A914 /* Assets.xcassets */,
-				F186918E1BB1016C0054A914 /* LaunchScreen.storyboard */,
 				F18691911BB1016C0054A914 /* Info.plist */,
 				F18691801BB1016C0054A914 /* Supporting Files */,
 			);
@@ -285,7 +302,6 @@
 				F116E5FA1BB1A58400AC9FD6 /* 9.jpeg in Resources */,
 				F116E5F41BB1A58400AC9FD6 /* 3.jpeg in Resources */,
 				F116E5F31BB1A58400AC9FD6 /* 2.jpeg in Resources */,
-				F18691901BB1016C0054A914 /* LaunchScreen.storyboard in Resources */,
 				F116E5F61BB1A58400AC9FD6 /* 5.jpeg in Resources */,
 				F116E5F21BB1A58400AC9FD6 /* 1.jpeg in Resources */,
 				F116E5F51BB1A58400AC9FD6 /* 4.jpeg in Resources */,
@@ -314,7 +330,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F116E5FE1BB21E9700AC9FD6 /* User.m in Sources */,
+				F116E6041BB220B100AC9FD6 /* Comment.m in Sources */,
+				F116E6011BB21F4300AC9FD6 /* Media.m in Sources */,
 				F18691851BB1016C0054A914 /* AppDelegate.m in Sources */,
+				F116E6071BB2232000AC9FD6 /* DataSource.m in Sources */,
 				F18691821BB1016C0054A914 /* main.m in Sources */,
 				F18691CC1BB187630054A914 /* ImagesTableViewController.m in Sources */,
 			);
@@ -350,17 +370,6 @@
 			targetProxy = F18691A21BB1016C0054A914 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		F186918E1BB1016C0054A914 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F186918F1BB1016C0054A914 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F18691A81BB1016C0054A914 /* Debug */ = {
