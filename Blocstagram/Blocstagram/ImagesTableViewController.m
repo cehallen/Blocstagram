@@ -40,7 +40,6 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"media item count: %lu",(unsigned long)[DataSource sharedInstance].mediaItems.count);
     return [DataSource sharedInstance].mediaItems.count;
 }
 
@@ -67,7 +66,7 @@
 //
     
 
-    NSLog(@"media item info: %@",[DataSource sharedInstance].mediaItems[indexPath.row]);
+//    NSLog(@"media item info: %@",[DataSource sharedInstance].mediaItems[indexPath.row]);
 
     
     MediaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mediaCell" forIndexPath:indexPath];
@@ -78,9 +77,10 @@
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
     UIImage *image = item.image;
-    
-//    return (CGRectGetWidth(self.view.frame) / image.size.width) * image.size.height;
+
     return 300 + (image.size.height / image.size.width * CGRectGetWidth(self.view.frame));
+//    return (CGRectGetWidth(self.view.frame) / image.size.width) * image.size.height;
+//    return (image.size.height / image.size.width * CGRectGetWidth(self.view.frame)); // this way without the 300 somehow makes the text not show consistently
 }
 
 

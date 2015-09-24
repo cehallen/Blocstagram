@@ -25,6 +25,7 @@ static UIColor *usernameLabelGray;
 static UIColor *commentLabelGray;
 static UIColor *linkColor;
 static NSParagraphStyle *paragraphStyle;
+static NSParagraphStyle *evenCommentParagraphStyle;
 
 @implementation MediaTableViewCell
 
@@ -48,6 +49,11 @@ static NSParagraphStyle *paragraphStyle;
     mutableParagraphStyle.paragraphSpacingBefore = 5;
     
     paragraphStyle = mutableParagraphStyle;
+    
+    // (as29: right align)
+    NSMutableParagraphStyle *evenCommentMutableParagraphStyle = [mutableParagraphStyle mutableCopy];
+    evenCommentMutableParagraphStyle.alignment = NSTextAlignmentRight;
+    evenCommentParagraphStyle = evenCommentMutableParagraphStyle;
 }
 
 
@@ -74,6 +80,7 @@ static NSParagraphStyle *paragraphStyle;
 
 - (void) layoutSubviews {
     [super layoutSubviews];
+    
     
     if (self.mediaItem) {
         
@@ -133,19 +140,34 @@ static NSParagraphStyle *paragraphStyle;
         NSString *baseString = [NSString stringWithFormat:@"%@ %@\n", comment.from.userName, comment.text];
         
         // Make an attributed string, with the "username" bold
-        
-        NSMutableAttributedString *oneCommentString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName : lightFont, NSParagraphStyleAttributeName : paragraphStyle}];
+
+        // (as29: increase character spacing -- align every other comment to the right)
+        NSMutableAttributedString *oneCommentString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName : lightFont, NSParagraphStyleAttributeName : [self getParagraphStyle:comment], NSKernAttributeName : @1.0}];
         
         NSRange usernameRange = [baseString rangeOfString:comment.from.userName];
         [oneCommentString addAttribute:NSFontAttributeName value:boldFont range:usernameRange];
         [oneCommentString addAttribute:NSForegroundColorAttributeName value:linkColor range:usernameRange];
         
         [commentString appendAttributedString:oneCommentString];
+        
+        // (as29: make first comment orange)
+        if ([self.mediaItem.comments indexOfObject:comment] == 0) {
+            [commentString beginEditing];
+            [commentString addAttribute:NSForegroundColorAttributeName value:[UIColor orangeColor] range:[baseString rangeOfString:comment.text]];
+            [commentString endEditing];
+        }
     }
     
     return commentString;
 }
 
+- (NSParagraphStyle *) getParagraphStyle:(Comment *)comment {
+    if ([self.mediaItem.comments indexOfObject:comment] % 2 == 1) {
+        return evenCommentParagraphStyle;
+    } else {
+        return paragraphStyle;
+    }
+}
 
 
 
