@@ -40,35 +40,10 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"media item count: %lu",(unsigned long)[DataSource sharedInstance].mediaItems.count);
     return [DataSource sharedInstance].mediaItems.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell" forIndexPath:indexPath];
-//    
-//    static NSInteger imageViewTag = 1234;
-//    UIImageView *imageView = (UIImageView*)[cell.contentView viewWithTag:imageViewTag];  /* if this cell doesn't have a uiimage view it's a new cell and below the if statement will trigger and give it one.  each cell we come across gets an image view added to it.  these cells get recycled, ie, they're deactivated as they scroll off-screen and this method 'tableView:cellForRowAtIndexPath:' is called each time a cell is scrolled to the screen */
-//    
-//    if (!imageView ) {
-//        imageView = [[UIImageView alloc] init];
-//        imageView.contentMode = UIViewContentModeScaleToFill;
-//        
-//        imageView.frame = cell.contentView.bounds;
-//        imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//        
-//        imageView.tag = imageViewTag;
-//        [cell.contentView addSubview:imageView];
-//    }
-//    
-//    Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
-//    imageView.image = item.image;
-//
-    
-
-    NSLog(@"media item info: %@",[DataSource sharedInstance].mediaItems[indexPath.row]);
-
     
     MediaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mediaCell" forIndexPath:indexPath];
     cell.mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
