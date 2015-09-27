@@ -150,9 +150,19 @@ static NSParagraphStyle *paragraphStyle;
         CGSize usernameLabelSize = [self.usernameAndCaptionLabel sizeThatFits:maxSize];  // (seems like "find the best size that fits inside this max size".  NOT creating a CGSize with a gigantic maxed out height.  creating one that is it's best intrinsic size while fitting inside the maxSize)
         CGSize commentLabelSize = [self.commentLabel sizeThatFits:maxSize];
         
-        self.usernameAndCaptionLabelHeightConstraint.constant = usernameLabelSize.height + 20;
-        self.commentLabelHeightConstraint.constant = commentLabelSize.height + 20;
-        self.imageHeightConstraint.constant = self.mediaItem.image.size.height / self.mediaItem.image.size.width * CGRectGetWidth(self.contentView.bounds);
+//        self.usernameAndCaptionLabelHeightConstraint.constant = usernameLabelSize.height + 20;
+        self.usernameAndCaptionLabelHeightConstraint.constant = usernameLabelSize.height == 0 ? 0 : usernameLabelSize.height + 20;
+        
+//        self.commentLabelHeightConstraint.constant = commentLabelSize.height + 20;
+        self.commentLabelHeightConstraint.constant = commentLabelSize.height == 0 ? 0 : commentLabelSize.height + 20;
+        
+//        self.imageHeightConstraint.constant = self.mediaItem.image.size.height / self.mediaItem.image.size.width * CGRectGetWidth(self.contentView.bounds);
+        if (self.mediaItem.image.size.width > 0 && CGRectGetWidth(self.contentView.bounds) > 0) {
+            self.imageHeightConstraint.constant = self.mediaItem.image.size.height / self.mediaItem.image.size.width * CGRectGetWidth(self.contentView.bounds);
+        } else {
+            self.imageHeightConstraint.constant = 0;
+        }
+        
     }
     // Hide the line between cells
     self.separatorInset = UIEdgeInsetsMake(0, CGRectGetWidth(self.bounds)/2.0, 0, CGRectGetWidth(self.bounds)/2.0);
