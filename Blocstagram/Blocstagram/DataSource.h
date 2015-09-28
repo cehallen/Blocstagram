@@ -18,4 +18,7 @@
 
 - (void)deleteMediaItem:(Media *)item;
 
+// (as31:)
+- (void) switchRowOf:(Media *)item fromIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
+
 @end

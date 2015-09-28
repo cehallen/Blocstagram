@@ -145,10 +145,20 @@
     [_mediaItems replaceObjectAtIndex:index withObject:object];
 }
 
+
+// our added methods using the methods above
 - (void)deleteMediaItem:(Media *)item {
     NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
     [mutableArrayWithKVO removeObject:item];
 }
+
+// (as31)
+- (void) switchRowOf:(Media *)item fromIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex {
+    NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+    [mutableArrayWithKVO removeObject:item];
+    [mutableArrayWithKVO insertObject:item atIndex:toIndex];
+}
+
 
 
 
