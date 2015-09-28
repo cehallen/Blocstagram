@@ -125,28 +125,28 @@ static NSParagraphStyle *paragraphStyle;
     return self;
 }
 
-/*
+
  + (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width {  // (ch29: when is this getting called??)
  // Make a cell
  MediaTableViewCell *layoutCell = [[MediaTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"layoutCell"];
  
- //    // Set it to the given width, and the maximum possible height
- //    layoutCell.frame = CGRectMake(0, 0, width, CGFLOAT_MAX);
- //
- // Give it the media item
- layoutCell.mediaItem = mediaItem;
+     // Set it to the given width, and the maximum possible height
+     layoutCell.frame = CGRectMake(0, 0, width, CGFLOAT_MAX);
+     
+     // Give it the media item
+     layoutCell.mediaItem = mediaItem;
+     
+     // Make it adjust the image view and labels
+     [layoutCell layoutSubviews];
+     layoutCell.frame = CGRectMake(0, 0, width, CGRectGetHeight(layoutCell.frame));
  
- // Make it adjust the image view and labels
- //    [layoutCell layoutSubviews];
- layoutCell.frame = CGRectMake(0, 0, width, CGRectGetHeight(layoutCell.frame));
- 
- // The height will be wherever the bottom of the comments label is
- [layoutCell setNeedsLayout];
- [layoutCell layoutIfNeeded];
- 
- // Get the actual height required for the cell
- return CGRectGetMaxY(layoutCell.commentLabel.frame);
- } */
+     // The height will be wherever the bottom of the comments label is
+     [layoutCell setNeedsLayout];
+     [layoutCell layoutIfNeeded];
+     
+     // Get the actual height required for the cell
+     return CGRectGetMaxY(layoutCell.commentLabel.frame);
+ }
 
 - (void) layoutSubviews {
     [super layoutSubviews];
