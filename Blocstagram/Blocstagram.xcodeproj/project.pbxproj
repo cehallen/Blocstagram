@@ -28,6 +28,7 @@
 		F186919B1BB1016C0054A914 /* BlocstagramTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F186919A1BB1016C0054A914 /* BlocstagramTests.m */; };
 		F18691A61BB1016C0054A914 /* BlocstagramUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F18691A51BB1016C0054A914 /* BlocstagramUITests.m */; };
 		F18691CC1BB187630054A914 /* ImagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F18691CB1BB187630054A914 /* ImagesTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		F1EA7CB01BBB201F00003A42 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1EA7CAF1BBB201F00003A42 /* LoginViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +83,8 @@
 		F18691A71BB1016C0054A914 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F18691CA1BB187630054A914 /* ImagesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagesTableViewController.h; sourceTree = "<group>"; };
 		F18691CB1BB187630054A914 /* ImagesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagesTableViewController.m; sourceTree = "<group>"; };
+		F1EA7CAE1BBB201F00003A42 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		F1EA7CAF1BBB201F00003A42 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +167,8 @@
 				F116E6031BB220B100AC9FD6 /* Comment.m */,
 				F116E6051BB2232000AC9FD6 /* DataSource.h */,
 				F116E6061BB2232000AC9FD6 /* DataSource.m */,
+				F1EA7CAE1BBB201F00003A42 /* LoginViewController.h */,
+				F1EA7CAF1BBB201F00003A42 /* LoginViewController.m */,
 				F186918C1BB1016C0054A914 /* Assets.xcassets */,
 				F18691911BB1016C0054A914 /* Info.plist */,
 				F18691801BB1016C0054A914 /* Supporting Files */,
@@ -340,6 +345,7 @@
 				F16FA5BC1BB2E93D00B5C6C9 /* MediaTableViewCell.m in Sources */,
 				F116E6011BB21F4300AC9FD6 /* Media.m in Sources */,
 				F18691851BB1016C0054A914 /* AppDelegate.m in Sources */,
+				F1EA7CB01BBB201F00003A42 /* LoginViewController.m in Sources */,
 				F116E6071BB2232000AC9FD6 /* DataSource.m in Sources */,
 				F18691821BB1016C0054A914 /* main.m in Sources */,
 				F18691CC1BB187630054A914 /* ImagesTableViewController.m in Sources */,
