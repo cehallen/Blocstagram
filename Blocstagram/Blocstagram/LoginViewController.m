@@ -42,12 +42,43 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [self.webView loadRequest:request];
     }
+    
 }
 
 - (void) dealloc {
     [self clearInstagramCookies];
     
     self.webView.delegate = nil;
+}
+
+
+/**
+ (AS.33) ADD BACK BUTTON IN WEBVIEW
+ - http://stackoverflow.com/questions/1662565/uiwebview-finished-loading-event
+ - http://stackoverflow.com/questions/6991623/how-to-convert-navigationcontrollers-back-button-into-browsers-back-button-in
+ - check if self.webView 'canGoBack' and then if it can set the button with the 'goBack' ability on click.  see bloc browser for examples
+ */
+- (void) webViewDidFinishLoad:(UIWebView *)webView {
+    [self updateBackButton];
+}
+
+- (void) updateBackButton {
+    if ([self.webView canGoBack]) {
+        if (!self.navigationItem.leftBarButtonItem) {
+            [self.navigationItem setHidesBackButton:YES]; // this is the default back button you are hiding.  what default back button?  anyway.. do it
+            UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backWasClicked:)];
+            [self.navigationItem setLeftBarButtonItem:backButton];
+        }
+    } else {
+        [self.navigationItem setLeftBarButtonItem:nil]; 
+        [self.navigationItem setHidesBackButton:NO];
+    }
+}
+
+- (void) backWasClicked:(id)sender {
+    if ([self.webView canGoBack]) {
+        [self.webView goBack];
+    }
 }
 
 /**
@@ -86,14 +117,15 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
+//- (void) viewWillAppear:(BOOL)animated {
+//    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+//    self.navigationItem.leftBarButtonItem = backButton;
+//}
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+
+
+//- (void) back {
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 
 @end
