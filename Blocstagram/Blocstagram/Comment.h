@@ -16,4 +16,9 @@
 @property (nonatomic, strong) User *from;
 @property (nonatomic, strong) NSString *text;
 
+- (instancetype) initWithDictionary:(NSDictionary *)commentDictionary;
+
+
+
+
 @end
