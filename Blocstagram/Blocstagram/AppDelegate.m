@@ -33,7 +33,7 @@
     [[NSNotificationCenter defaultCenter] addObserverForName:LoginViewControllerDidGetAccessTokenNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
         ImagesTableViewController *imagesVC = [[ImagesTableViewController alloc] init];
         [navVC setViewControllers:@[imagesVC] animated:YES];
-    }];
+    }]; // notice how navVC is a nav controller and it's view controller is set and popped between imagesVC and loginVC.  ie, navVC 'contains' a VC which we programmatically set.  navVC is always the rootViewController tho, as said below.
     
     self.window.rootViewController = navVC;
     
