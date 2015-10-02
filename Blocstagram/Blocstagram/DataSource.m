@@ -59,7 +59,7 @@
 
 
 
-- (void) requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {  // ?: find where this pull to refresh message is called and how we codify a drag-down-at-top-of-screen action.  I forgot.  ImageTableViewController.m and the refreshControl stuff.
+- (void) requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {  // see as34 for your work through of this process
     // #1
     
     self.thereAreNoMoreOlderMessages = NO;
@@ -76,10 +76,14 @@
             parameters = @{@"min_id": minID};
         }
         
-        [self populateDataWithParameters:parameters completionHandler:^(NSError *error) {  // confusing completion handler mechanics here
+        [self populateDataWithParameters:parameters completionHandler:^(NSError *error) {  // confusing completion handler mechanics here because using the same name completionHandler. note that the code block is defined in ImagesTableViewController.m and handed off here to where it's finally used in populateDataWithParameters
+            // the completionHandler block code is:  [sender endRefreshing];  waaaay back in imagesTableVC, to stop the whirler if finished or errored out.  like JS closures, encapsulating state of original scope.
+            // passing the block on here with another scope closure marker.  like a flag placed on the journey as a reminder.  eventually if there is an error we can enact change in two different scopes.  here in DataSource and over in ImagesTable VC.  here we'll make DataSource set isRefreshing to NO, and in imagestableVC we'll notify the sender (the UIRefreshControl object) that refreshing is over.
+            // probably should have different names, to make the two scope blocks easier to differentiate.  like imagesVCCompletionHandler and dataSourceCompletionHandler.
+            
             self.isRefreshing = NO;
             
-            if (completionHandler) {
+            if (completionHandler) {  // refers to the closure in imagesTableVC
                 completionHandler(error);
             }
         }];
@@ -144,14 +148,14 @@
                         dispatch_async(dispatch_get_main_queue(), ^{
                             // done networking, go back on the main thread
                             [self parseDataFromFeedDictionary:feedDictionary fromRequestWithParameters:parameters];
-                            
+                
                             if (completionHandler) {
                                 completionHandler(nil);
                             }
                         });
-                    } else if (completionHandler) { // here is the error case, as in the data didn't load properly in parseDataFromFeedDictionary
+                    } else if (completionHandler) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            completionHandler(jsonError);
+                            completionHandler(jsonError);  // refers to the closure in DataSource, which enacts change there, and also calls the first completion handler closure way back in ImagesTableVC to enact change there too.  daisy-chaining closures.
                         });
                     }
                 } else if (completionHandler) {
@@ -164,7 +168,7 @@
     }
 }
 
-- (void) parseDataFromFeedDictionary:(NSDictionary *) feedDictionary fromRequestWithParameters:(NSDictionary *)parameters {
+- (void) parseDataFromFeedDictionary:(NSDictionary *) feedDictionary fromRequestWithParameters:(NSDictionary *)parameters {  // parse data AND potentially add it to the model
     
     NSArray *mediaArray = feedDictionary[@"data"];
     
@@ -198,7 +202,7 @@
             [mutableArrayWithKVO addObjectsFromArray:tmpMediaItems];
         }
     } else {
-        [self willChangeValueForKey:@"mediaItems"];
+        [self willChangeValueForKey:@"mediaItems"];  // ?: what is this
         self.mediaItems = tmpMediaItems;
         [self didChangeValueForKey:@"mediaItems"];
     }

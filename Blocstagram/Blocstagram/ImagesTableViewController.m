@@ -48,7 +48,7 @@
 }
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if (object == [DataSource sharedInstance] && [keyPath isEqualToString:@"mediaItems"]) {
+    if (object == [DataSource sharedInstance] && [keyPath isEqualToString:@"mediaItems"]) { // counterpart 'addObserver:forKeyPath:options:context:' over in data source to make this the observer of it.  eg, [datasource_instance addObserver: image_table_view_instance...]
         // We know mediaItems changed.  Let's see what kind of change it is.
         NSKeyValueChange kindOfChange = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
         
@@ -89,7 +89,7 @@
 }
 
 - (void) refreshControlDidFire:(UIRefreshControl *) sender {
-    [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:^(NSError *error) {
+    [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:^(NSError *error) {  // completionHandler block origin here!!
         [sender endRefreshing];
     }];
 }
