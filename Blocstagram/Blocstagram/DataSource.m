@@ -44,13 +44,32 @@
     self = [super init];
     
     if (self) {
-//        [self registerForAccessTokenNotification];
         self.accessToken = [UICKeyChainStore stringForKey:@"access token"];
         
         if (!self.accessToken) {
             [self registerForAccessTokenNotification];
         } else {
-            [self populateDataWithParameters:nil completionHandler:nil];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSString *fullPath = [self pathForFilename:NSStringFromSelector(@selector(mediaItems))];
+                NSArray *storedMediaItems = [NSKeyedUnarchiver unarchiveObjectWithFile:fullPath];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (storedMediaItems.count > 0) {
+                        NSMutableArray *mutableMediaItems = [storedMediaItems mutableCopy];
+                        
+                        [self willChangeValueForKey:@"mediaItems"];
+                        self.mediaItems = mutableMediaItems;
+                        [self didChangeValueForKey:@"mediaItems"];
+                        // #1
+                        for (Media* mediaItem in self.mediaItems) {
+                            [self downloadImageForMediaItem:mediaItem];
+                        }
+                        
+                    } else {
+                        [self populateDataWithParameters:nil completionHandler:nil];
+                    }
+                });
+            });
         }
 
     }
@@ -217,6 +236,30 @@
         self.mediaItems = tmpMediaItems;
         [self didChangeValueForKey:@"mediaItems"];
     }
+    
+    [self saveImages];
+}
+
+- (void) saveImages {
+    
+    if (self.mediaItems.count > 0) {
+        // Write the changes to disk
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSUInteger numberOfItemsToSave = MIN(self.mediaItems.count, 50);
+            NSArray *mediaItemsToSave = [self.mediaItems subarrayWithRange:NSMakeRange(0, numberOfItemsToSave)];
+            
+            NSString *fullPath = [self pathForFilename:NSStringFromSelector(@selector(mediaItems))];  // still unsure how that method works (down below)
+            NSData *mediaItemData = [NSKeyedArchiver archivedDataWithRootObject:mediaItemsToSave];
+            
+            NSError *dataError;
+            BOOL wroteSuccessfully = [mediaItemData writeToFile:fullPath options:NSDataWritingAtomic | NSDataWritingFileProtectionCompleteUnlessOpen error:&dataError];
+            
+            if (!wroteSuccessfully) {
+                NSLog(@"Couldn't write file: %@", dataError);
+            }
+        });
+        
+    }
 }
 
 - (void) downloadImageForMediaItem:(Media *)mediaItem {
@@ -237,7 +280,9 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
                         NSUInteger index = [mutableArrayWithKVO indexOfObject:mediaItem];
-                        [mutableArrayWithKVO replaceObjectAtIndex:index withObject:mediaItem];  // "This data model update will trigger the KVO notification to reload the individual row in the table view."  you need to reread the KVO checkpoint to understand it better.  like delegate protocol for data, etc etc, but still too fuzzy on the mechanics
+                        [mutableArrayWithKVO replaceObjectAtIndex:index withObject:mediaItem];  // "This data model update will trigger the KVO notification to reload the individual row in the table view."  reread ch34 assignment to remind abt how the process works method to method
+                        
+                        [self saveImages];
                     });
                 }
             } else {
@@ -245,6 +290,16 @@
             }
         });
     }
+}
+
+// method to create full path for given filename (when caching for future use of app).  not intuitive, but option-click the params passed in and the method
+- (NSString *) pathForFilename:(NSString *) filename {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths firstObject];
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:filename];
+    
+    NSLog(@"data path for filename saving: %@", dataPath);  // testing to see what the path looks like where we're saving mediaItems.  looks like this: /Users/mooncake/Library/Developer/CoreSimulator/Devices/B2EC86BD-8561-4ED4-910E-CE91A79FAA2C/data/Containers/Data/Application/07FA6380-8AD6-43F2-9A58-779109740C4F/Library/Caches/mediaItems
+    return dataPath;
 }
 
 
