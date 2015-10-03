@@ -27,13 +27,19 @@
     [DataSource sharedInstance]; // create the data source (so it can receive the access token notification)
     
     UINavigationController *navVC = [[UINavigationController alloc] init];
-    LoginViewController *loginVC = [[LoginViewController alloc] init];
-    [navVC setViewControllers:@[loginVC] animated:YES];
     
-    [[NSNotificationCenter defaultCenter] addObserverForName:LoginViewControllerDidGetAccessTokenNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+    if (![DataSource sharedInstance].accessToken) {
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        [navVC setViewControllers:@[loginVC] animated:YES];
+        
+        [[NSNotificationCenter defaultCenter] addObserverForName:LoginViewControllerDidGetAccessTokenNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+            ImagesTableViewController *imagesVC = [[ImagesTableViewController alloc] init];
+            [navVC setViewControllers:@[imagesVC] animated:YES];  // if notification is received, this block gets sent over, 'and is added to the operation queue'.
+        }];
+    } else {
         ImagesTableViewController *imagesVC = [[ImagesTableViewController alloc] init];
         [navVC setViewControllers:@[imagesVC] animated:YES];
-    }]; // notice how navVC is a nav controller and it's view controller is set and popped between imagesVC and loginVC.  ie, navVC 'contains' a VC which we programmatically set.  navVC is always the rootViewController tho, as said below.
+    }
     
     self.window.rootViewController = navVC;
     

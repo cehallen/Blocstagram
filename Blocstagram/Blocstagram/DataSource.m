@@ -11,6 +11,8 @@
 #import "Media.h"
 #import "Comment.h"
 #import "LoginViewController.h"
+#import <UICKeyChainStore.h>
+
 
 @interface DataSource () {
     NSMutableArray *_mediaItems;
@@ -42,15 +44,24 @@
     self = [super init];
     
     if (self) {
-        [self registerForAccessTokenNotification];
+//        [self registerForAccessTokenNotification];
+        self.accessToken = [UICKeyChainStore stringForKey:@"access token"];
+        
+        if (!self.accessToken) {
+            [self registerForAccessTokenNotification];
+        } else {
+            [self populateDataWithParameters:nil completionHandler:nil];
+        }
+
     }
     
     return self;
 }
 
-- (void) registerForAccessTokenNotification {
+- (void) registerForAccessTokenNotification {  // *? research more on notification center.  so there is a central notification center created (where did we create it?) and you add observers for certain notifications, like below here.  so this obj DataSource will enact change upon receiving notification that 'LoginViewControllerDidGetAccessTokenNotification'.  This method addObserverForName:x:x:x also send a block as a param to do stuff over there in the notification center.  Over in LoginVC where notification is posted by postNotificationName:object:, the object param is given the argument of an NSString of the access token which we access w the block passed in here.  (note how the block works as a closure.  you pass it in and the method knows what to do with it (by the API for the method), the param is type NSNotification, used to access the object attr of the notification and effect change.
     [[NSNotificationCenter defaultCenter] addObserverForName:LoginViewControllerDidGetAccessTokenNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
         self.accessToken = note.object;
+        [UICKeyChainStore setString:self.accessToken forKey:@"access token"];
         
         // Got a token; populate the initial data
         [self populateDataWithParameters:nil completionHandler:nil];
