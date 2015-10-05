@@ -13,13 +13,14 @@
 @protocol MediaTableViewCellDelegate <NSObject>
 
 - (void) cell:(MediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView;
+- (void) cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView;
 
 @end
 
 @interface MediaTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) Media *mediaItem;
-@property (nonatomic, weak) id<MediaTableViewCellDelegate> delegate;  // review delegate mechanics
+@property (nonatomic, weak) id<MediaTableViewCellDelegate> delegate;  // review delegate mechanics.  i *believe* self here is the delegating obj while the delegate is _______, and we're getting a ref to that delegate through this property.
 
 + (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width;
 
