@@ -20,7 +20,7 @@
 @interface MediaTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) Media *mediaItem;
-@property (nonatomic, weak) id<MediaTableViewCellDelegate> delegate;  // review delegate mechanics.  i *believe* self here is the delegating obj while the delegate is _______, and we're getting a ref to that delegate through this property.
+@property (nonatomic, weak) id<MediaTableViewCellDelegate> delegate;  // review delegate mechanics.  i *believe* self here is the delegating obj while the delegate is _______, and we're getting a ref to that delegate through this property.  try again:  I think the media cell is the delegating obj while the MediaFullScreenVC is the delegate.  (it is the one which zooms in on a scroll view, etc).  so you see this property here (line 23).  over all doesn't make sense still.  
 
 + (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width;
 
