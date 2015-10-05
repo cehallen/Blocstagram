@@ -65,6 +65,20 @@
                             [self downloadImageForMediaItem:mediaItem];
                         }
                         
+                        
+                        
+                        // as35: work here to auto fetch newer items on load if there are cached mediaItems.  I think it works..  hard to tell.
+                        
+                        [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:nil];
+
+            
+                        
+                        // how can I call the refresh method on the ImagesTableViewController?  I'd like the refresher to spin, etc.  ie, access the refresh control and trigger the event from there.  is it possible if ImagesTableVC is not a singleton?
+                
+                        
+                        
+                        
+                        
                     } else {
                         [self populateDataWithParameters:nil completionHandler:nil];
                     }
@@ -248,11 +262,11 @@
             NSUInteger numberOfItemsToSave = MIN(self.mediaItems.count, 50);
             NSArray *mediaItemsToSave = [self.mediaItems subarrayWithRange:NSMakeRange(0, numberOfItemsToSave)];
             
-            NSString *fullPath = [self pathForFilename:NSStringFromSelector(@selector(mediaItems))];  // still unsure how that method works (down below)
+            NSString *fullPath = [self pathForFilename:NSStringFromSelector(@selector(mediaItems))];  // still unsure how that method works (down below) but it's not priority.
             NSData *mediaItemData = [NSKeyedArchiver archivedDataWithRootObject:mediaItemsToSave];
             
             NSError *dataError;
-            BOOL wroteSuccessfully = [mediaItemData writeToFile:fullPath options:NSDataWritingAtomic | NSDataWritingFileProtectionCompleteUnlessOpen error:&dataError];
+            BOOL wroteSuccessfully = [mediaItemData writeToFile:fullPath options:NSDataWritingAtomic | NSDataWritingFileProtectionCompleteUnlessOpen error:&dataError];  // i assume this deletes previously saved mediaItems and bashes them?  automatically, or we did that somewhere..
             
             if (!wroteSuccessfully) {
                 NSLog(@"Couldn't write file: %@", dataError);
@@ -298,7 +312,7 @@
     NSString *documentsDirectory = [paths firstObject];
     NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:filename];
     
-    NSLog(@"data path for filename saving: %@", dataPath);  // testing to see what the path looks like where we're saving mediaItems.  looks like this: /Users/mooncake/Library/Developer/CoreSimulator/Devices/B2EC86BD-8561-4ED4-910E-CE91A79FAA2C/data/Containers/Data/Application/07FA6380-8AD6-43F2-9A58-779109740C4F/Library/Caches/mediaItems
+//    NSLog(@"data path for filename saving: %@", dataPath);  // testing to see what the path looks like where we're saving mediaItems.  looks like this: /Users/mooncake/Library/Developer/CoreSimulator/Devices/B2EC86BD-8561-4ED4-910E-CE91A79FAA2C/data/Containers/Data/Application/07FA6380-8AD6-43F2-9A58-779109740C4F/Library/Caches/mediaItems
     return dataPath;
 }
 
