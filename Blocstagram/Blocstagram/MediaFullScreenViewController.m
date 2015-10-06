@@ -8,8 +8,6 @@
 
 #import "MediaFullScreenViewController.h"
 #import "Media.h"  // we'll start by importing 'media' and creating a property to store it.  could your problem with importing ImagesTableVC in as35 be this simple (you want to access that specific instance of it, not make a new one).  you must learn more what's happening behind the scenes here wrt instance and memory and pointers.
-// as36:
-#import "MediaTableViewCell.h"
 
 @interface MediaFullScreenViewController () <UIScrollViewDelegate>
 

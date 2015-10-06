@@ -46,7 +46,5 @@
 
 + (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width;
 
-// as36
-- (void) longPressFired:(UILongPressGestureRecognizer *)sender;
 
 @end
