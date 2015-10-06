@@ -8,6 +8,8 @@
 
 #import "MediaFullScreenViewController.h"
 #import "Media.h"  // we'll start by importing 'media' and creating a property to store it.  could your problem with importing ImagesTableVC in as35 be this simple (you want to access that specific instance of it, not make a new one).  you must learn more what's happening behind the scenes here wrt instance and memory and pointers.
+// as36:
+#import "MediaTableViewCell.h"
 
 @interface MediaFullScreenViewController () <UIScrollViewDelegate>
 
@@ -56,6 +58,27 @@
     [self.scrollView addGestureRecognizer:self.tap];
     [self.scrollView addGestureRecognizer:self.doubleTap];
     
+    
+    
+    // as36: button to piggyback on share action already made
+    // must implement an action for a selector over in MediaTableViewCell (longPressFired:).  problem is how to do it.
+    /*
+     - import MediaTableViewCell.h to this .m file  √
+     - set longPressFired as action on our shareButton here √
+     - make longPressFired public by putting into its .h file?  √
+     - should I make the 'target' not self, but instead the MediaTableViewCell?
+     */
+    self.shareButton = [[UIButton alloc] init];
+    [self.shareButton setTitle:@"Share" forState:UIControlStateNormal];
+    [self.shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.shareButton.titleLabel setFont:[UIFont systemFontOfSize:10]];
+    self.shareButton.backgroundColor = [UIColor grayColor];
+    [self.shareButton addTarget:self action:@selector(shareTapped) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.shareButton];
+    
+    
+    
+    
 }
 
 - (void) viewWillLayoutSubviews {
@@ -72,6 +95,14 @@
     
     self.scrollView.minimumZoomScale = minScale;
     self.scrollView.maximumZoomScale = 1;
+    
+    
+    // as36: button layout
+//    CGFloat buttonHeight = CGRectGetHeight(self.view.bounds) / 8;
+//    CGFloat buttonWidth = CGRectGetWidth(self.view.bounds) / 8;
+    CGFloat buttonX = CGRectGetWidth(self.view.bounds) - 60;
+    CGFloat buttonY = 25;
+    self.shareButton.frame = CGRectMake(buttonX, buttonY, 50, 20);
 }
 
 - (void) centerScrollView {
@@ -135,6 +166,19 @@
         [self.scrollView zoomToRect:CGRectMake(x, y, width, height) animated:YES];
     } else {
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
+    }
+}
+
+- (void) shareTapped {
+    NSMutableArray *itemsToShare = [NSMutableArray array];
+    
+    if (self.imageView.image) {
+        [itemsToShare addObject:self.imageView.image];
+    }
+    
+    if (itemsToShare.count > 0) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+        [self presentViewController:activityVC animated:YES completion:nil];
     }
 }
 
