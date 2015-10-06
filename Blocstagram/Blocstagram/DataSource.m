@@ -69,7 +69,8 @@
                         
                         // as35: work here to auto fetch newer items on load if there are cached mediaItems.  I think it works..  hard to tell.
                         
-                        [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:nil];
+                        [self requestNewItemsWithCompletionHandler:nil];
+                        
 
             
                         
