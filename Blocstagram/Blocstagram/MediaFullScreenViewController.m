@@ -59,17 +59,11 @@
     
     
     // as36: button to piggyback on share action already made
-    // must implement an action for a selector over in MediaTableViewCell (longPressFired:).  problem is how to do it.
-    /*
-     - import MediaTableViewCell.h to this .m file  √
-     - set longPressFired as action on our shareButton here √
-     - make longPressFired public by putting into its .h file?  √
-     - should I make the 'target' not self, but instead the MediaTableViewCell?
-     */
+    
     self.shareButton = [[UIButton alloc] init];
     [self.shareButton setTitle:@"Share" forState:UIControlStateNormal];
     [self.shareButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.shareButton.titleLabel setFont:[UIFont systemFontOfSize:10]];
+    [self.shareButton.titleLabel setFont:[UIFont systemFontOfSize:12]];
     self.shareButton.backgroundColor = [UIColor grayColor];
     [self.shareButton addTarget:self action:@selector(shareTapped) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.shareButton];
@@ -96,8 +90,6 @@
     
     
     // as36: button layout
-//    CGFloat buttonHeight = CGRectGetHeight(self.view.bounds) / 8;
-//    CGFloat buttonWidth = CGRectGetWidth(self.view.bounds) / 8;
     CGFloat buttonX = CGRectGetWidth(self.view.bounds) - 60;
     CGFloat buttonY = 25;
     self.shareButton.frame = CGRectMake(buttonX, buttonY, 50, 20);
