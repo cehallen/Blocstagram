@@ -14,7 +14,7 @@
 #import "MediaTableViewCell.h"
 #import "MediaFullScreenViewController.h"
 
-@interface ImagesTableViewController () <MediaTableViewCellDelegate>
+@interface ImagesTableViewController () <MediaTableViewCellDelegate>  // this is 1 marker of the delegate, to accept that protocol defined in MediaTableViewCell. the 2nd is line~ 135 `cell.delegate = self` to specifically codify the delegate-delegating relationship between instances.  and the 3rd is simply the `#import "MediaTableViewCell.h` if not done already
 
 @end
 
