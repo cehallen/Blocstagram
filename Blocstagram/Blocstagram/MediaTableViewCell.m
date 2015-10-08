@@ -83,8 +83,9 @@ static NSParagraphStyle *paragraphStyle;
         
         // as37
         self.doubleTapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapped:)];
-        self.doubleTapGR.delegate = self;
         self.doubleTapGR.numberOfTapsRequired = 2;
+        self.doubleTapGR.delegate = self;
+        [self.tapGestureRecognizer requireGestureRecognizerToFail:self.doubleTapGR]; // ch36: "allows one gesture recognizer to wait for another gesture recognizer to fail before it succeeds. Without this line, it would be impossible to double-tap because the single tap gesture recognizer would fire before the user had a chance to tap twice."
         [self.mediaImageView addGestureRecognizer:self.doubleTapGR];
         //end as37
         
@@ -261,6 +262,8 @@ static NSParagraphStyle *paragraphStyle;
  - write doubleTapped: action
  - remember the delegate of self is ImagesTableVC, so you write a method there, add name to protocol here in .h
  - that method must delete and redownload image from IG.
+ - probem: double tapping doesn't work bc a single tap instigates the zoom view before a double tap is registered.
+        - fix:
  - actually, one method to delete, then you can call the downloadImageForMediaItem method already defined in DataSource
  */
 - (void) doubleTapped:(UITapGestureRecognizer *)sender {
