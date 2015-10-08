@@ -37,6 +37,9 @@
     [self.refreshControl addTarget:self action:@selector(refreshControlDidFire:) forControlEvents:UIControlEventValueChanged];
     
     [self.tableView registerClass:[MediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"];
+    
+    // as38
+    [self downloadImages];  // imgs visible on screen
 }
 
 - (void)dealloc {
@@ -114,6 +117,26 @@
     }
 }
 
+//    Media *mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
+//    if (mediaItem.downloadState == MediaDownloadStateNeedsImage) {
+//        [[DataSource sharedInstance] downloadImageForMediaItem:mediaItem];
+//    }
+// as38:
+/* method to download images if scrolling 'is decelerating'
+ - use [self.tableView indexPathsForVisibleRows] to get array of indexes, and download images for those mediaItems
+ */
+- (void) downloadImages {
+    NSLog(@"downloadImages fired");
+    
+    NSArray *indexPaths = [self.tableView indexPathsForVisibleRows];
+    for (NSIndexPath *indexPath in indexPaths) {
+        Media *mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
+        if (mediaItem.downloadState == MediaDownloadStateNeedsImage) {
+            [[DataSource sharedInstance] downloadImageForMediaItem:mediaItem];
+        }
+    }
+}
+
 
 #pragma mark - UIScrollViewDelegate
 
@@ -121,6 +144,12 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self infiniteScrollIfNecessary];
 }
+
+// as38
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    [self downloadImages];
+}
+
 
 
 #pragma mark - Table view data source
@@ -137,12 +166,14 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    Media *mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
-    if (mediaItem.downloadState == MediaDownloadStateNeedsImage) {
-        [[DataSource sharedInstance] downloadImageForMediaItem:mediaItem];
-    }
-}
+
+// // as38: test NOT downloading here, and instead dl'ing when the scrolling slows down
+//- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    Media *mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
+//    if (mediaItem.downloadState == MediaDownloadStateNeedsImage) {
+//        [[DataSource sharedInstance] downloadImageForMediaItem:mediaItem];
+//    }
+//}
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
