@@ -65,10 +65,7 @@
                         [self willChangeValueForKey:@"mediaItems"];
                         self.mediaItems = mutableMediaItems;
                         [self didChangeValueForKey:@"mediaItems"];
-                        // #1
-                        for (Media* mediaItem in self.mediaItems) {
-                            [self downloadImageForMediaItem:mediaItem];
-                        }
+                        
                         
                     } else {
                         [self populateDataWithParameters:nil completionHandler:nil];
@@ -233,7 +230,6 @@
         
         if (mediaItem) {
             [tmpMediaItems addObject:mediaItem];
-            [self downloadImageForMediaItem:mediaItem];
         }
     }
     
@@ -288,45 +284,43 @@
 
 - (void) downloadImageForMediaItem:(Media *)mediaItem {
     if (mediaItem.mediaURL && !mediaItem.image) {
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            NSURLRequest *request = [NSURLRequest requestWithURL:mediaItem.mediaURL];
-//            
-//            NSURLResponse *response;
-//            NSError *error;
-//            NSData *imageData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-//            
-//            if (imageData) {
-//                UIImage *image = [UIImage imageWithData:imageData];
-//                
-//                if (image) {
-//                    mediaItem.image = image;
-//                    
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
-//                        NSUInteger index = [mutableArrayWithKVO indexOfObject:mediaItem];
-//                        [mutableArrayWithKVO replaceObjectAtIndex:index withObject:mediaItem];  // "This data model update will trigger the KVO notification to reload the individual row in the table view."  reread ch34 assignment to remind abt how the process works method to method
-//                        
-//                        [self saveImages];
-//                    });
-//                }
-//            } else {
-//                NSLog(@"Error downloading image: %@", error);
-//            }
-//        });
+        mediaItem.downloadState = MediaDownloadStateDownloadInProgress;
+        
         [self.instagramOperationManager GET:mediaItem.mediaURL.absoluteString
                                  parameters:nil
                                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                         if ([responseObject isKindOfClass:[UIImage class]]) {
                                             mediaItem.image = responseObject;
+                                            mediaItem.downloadState = MediaDownloadStateHasImage;
                                             NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
                                             NSUInteger index = [mutableArrayWithKVO indexOfObject:mediaItem];
                                             [mutableArrayWithKVO replaceObjectAtIndex:index withObject:mediaItem];
+                                            [self saveImages];
+                                        } else {
+                                            mediaItem.downloadState = MediaDownloadStateNonRecoverableError;
                                         }
-                                        
-                                        [self saveImages];
                                         
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                         NSLog(@"Error downloading image: %@", error);
+                                        
+                                        mediaItem.downloadState = MediaDownloadStateNonRecoverableError;
+                                        
+                                        if ([error.domain isEqualToString:NSURLErrorDomain]) {
+                                            // A networking problem
+                                            if (error.code == NSURLErrorTimedOut ||
+                                                error.code == NSURLErrorCancelled ||
+                                                error.code == NSURLErrorCannotConnectToHost ||
+                                                error.code == NSURLErrorNetworkConnectionLost ||
+                                                error.code == NSURLErrorNotConnectedToInternet ||
+                                                error.code == kCFURLErrorInternationalRoamingOff ||
+                                                error.code == kCFURLErrorCallIsActive ||
+                                                error.code == kCFURLErrorDataNotAllowed ||
+                                                error.code == kCFURLErrorRequestBodyStreamExhausted) {
+                                                
+                                                // It might work if we try again
+                                                mediaItem.downloadState = MediaDownloadStateNeedsImage;
+                                            }
+                                        }
                                     }];
     }
 }
@@ -337,7 +331,7 @@
     NSString *documentsDirectory = [paths firstObject];
     NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:filename];
     
-    NSLog(@"data path for filename saving: %@", dataPath);  // testing to see what the path looks like where we're saving mediaItems.  looks like this: /Users/mooncake/Library/Developer/CoreSimulator/Devices/B2EC86BD-8561-4ED4-910E-CE91A79FAA2C/data/Containers/Data/Application/07FA6380-8AD6-43F2-9A58-779109740C4F/Library/Caches/mediaItems
+//    NSLog(@"data path for filename saving: %@", dataPath);  // testing to see what the path looks like where we're saving mediaItems.  looks like this: /Users/mooncake/Library/Developer/CoreSimulator/Devices/B2EC86BD-8561-4ED4-910E-CE91A79FAA2C/data/Containers/Data/Application/07FA6380-8AD6-43F2-9A58-779109740C4F/Library/Caches/mediaItems
     return dataPath;
 }
 
