@@ -168,6 +168,18 @@
     }
 }
 
+// as37
+- (void) cell:(MediaTableViewCell *)cell didDoubleTapImageView:(UIImageView *)imageView {
+    NSLog(@"(1) double tapped for as37");
+    if (cell.mediaItem.image) {
+        // use KVO to delete image?  probably not, as you aren't setting, replacing, or deleting a mediaItem whole
+        cell.mediaItem.image = nil;
+        NSLog(@"(2) double tapped for as37");
+    }
+    
+    
+}
+
 
 /*
 // Override to support conditional editing of the table view.

@@ -23,6 +23,9 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
 
+// as37
+@property (nonatomic, strong) UITapGestureRecognizer *doubleTapGR;
+
 
 @end
 
@@ -77,6 +80,13 @@ static NSParagraphStyle *paragraphStyle;
         self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFired:)];
         self.longPressGestureRecognizer.delegate = self;
         [self.mediaImageView addGestureRecognizer:self.longPressGestureRecognizer];
+        
+        // as37
+        self.doubleTapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapped:)];
+        self.doubleTapGR.delegate = self;
+        self.doubleTapGR.numberOfTapsRequired = 2;
+        [self.mediaImageView addGestureRecognizer:self.doubleTapGR];
+        //end as37
         
         self.usernameAndCaptionLabel = [[UILabel alloc] init];
         self.usernameAndCaptionLabel.numberOfLines = 0;
@@ -244,6 +254,17 @@ static NSParagraphStyle *paragraphStyle;
     if (sender.state == UIGestureRecognizerStateBegan) {
         [self.delegate cell:self didLongPressImageView:self.mediaImageView];
     }
+}
+
+/* as37 double tap to redownload image from instagram
+ - create gesture recognizer and add to imageView √
+ - write doubleTapped: action
+ - remember the delegate of self is ImagesTableVC, so you write a method there, add name to protocol here in .h
+ - that method must delete and redownload image from IG.
+ - actually, one method to delete, then you can call the downloadImageForMediaItem method already defined in DataSource
+ */
+- (void) doubleTapped:(UITapGestureRecognizer *)sender {
+    [self.delegate cell:self didDoubleTapImageView:self.mediaImageView];
 }
 
 #pragma mark - UIGestureRecognizerDelegate

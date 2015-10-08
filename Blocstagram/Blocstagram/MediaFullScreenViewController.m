@@ -40,7 +40,7 @@
     [self.view addSubview:self.scrollView];
     
     self.imageView = [UIImageView new];
-    self.imageView.image = self.media.image;  // this instance of 'media'.. where does it come from.  I assume now ever media item will have a link to one of this class, and be set up over in Media?  fuzzy on importing Media and making these links.  simplify it down to a delegate relationship if you can.
+    self.imageView.image = self.media.image;  // this instance of 'media'.. where does it come from.  I assume now every media item will have a link to one of this class, and be set up over in Media?  fuzzy on importing Media and making these links.  simplify it down to a delegate relationship if you can.
     
     [self.scrollView addSubview:self.imageView];
     

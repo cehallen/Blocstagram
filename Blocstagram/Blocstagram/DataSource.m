@@ -337,7 +337,7 @@
     NSString *documentsDirectory = [paths firstObject];
     NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:filename];
     
-    NSLog(@"data path for filename saving: %@", dataPath);  // testing to see what the path looks like where we're saving mediaItems.  looks like this: /Users/mooncake/Library/Developer/CoreSimulator/Devices/B2EC86BD-8561-4ED4-910E-CE91A79FAA2C/data/Containers/Data/Application/07FA6380-8AD6-43F2-9A58-779109740C4F/Library/Caches/mediaItems
+//    NSLog(@"data path for filename saving: %@", dataPath);  // testing to see what the path looks like where we're saving mediaItems.  looks like this: /Users/mooncake/Library/Developer/CoreSimulator/Devices/B2EC86BD-8561-4ED4-910E-CE91A79FAA2C/data/Containers/Data/Application/07FA6380-8AD6-43F2-9A58-779109740C4F/Library/Caches/mediaItems
     return dataPath;
 }
 
