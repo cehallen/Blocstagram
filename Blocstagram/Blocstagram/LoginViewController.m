@@ -36,6 +36,7 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
     self.title = NSLocalizedString(@"Login", @"Login");
     
 //    NSString *urlString = [NSString stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token", [DataSource instagramClientID], [self redirectURI]];
+    // still not 'liking' properly.
     NSString *urlString = [NSString stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&scope=likes+comments+relationships&redirect_uri=%@&response_type=token", [DataSource instagramClientID], [self redirectURI]];
     NSURL *url = [NSURL URLWithString:urlString];
     
