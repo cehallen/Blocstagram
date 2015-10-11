@@ -15,6 +15,7 @@
 		F116E6071BB2232000AC9FD6 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F116E6061BB2232000AC9FD6 /* DataSource.m */; settings = {ASSET_TAGS = (); }; };
 		F16FA5BC1BB2E93D00B5C6C9 /* MediaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F16FA5BB1BB2E93D00B5C6C9 /* MediaTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		F17E3BBE1BC7F6CA0075CA99 /* CircleSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F17E3BBD1BC7F6CA0075CA99 /* CircleSpinnerView.m */; settings = {ASSET_TAGS = (); }; };
+		F17E3BC11BC81C8F0075CA99 /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F17E3BC01BC81C8F0075CA99 /* LikeButton.m */; settings = {ASSET_TAGS = (); }; };
 		F18691821BB1016C0054A914 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F18691811BB1016C0054A914 /* main.m */; };
 		F18691851BB1016C0054A914 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F18691841BB1016C0054A914 /* AppDelegate.m */; };
 		F186918D1BB1016C0054A914 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F186918C1BB1016C0054A914 /* Assets.xcassets */; };
@@ -59,6 +60,8 @@
 		F16FA5BB1BB2E93D00B5C6C9 /* MediaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTableViewCell.m; sourceTree = "<group>"; };
 		F17E3BBC1BC7F6CA0075CA99 /* CircleSpinnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleSpinnerView.h; sourceTree = "<group>"; };
 		F17E3BBD1BC7F6CA0075CA99 /* CircleSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleSpinnerView.m; sourceTree = "<group>"; };
+		F17E3BBF1BC81C8F0075CA99 /* LikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeButton.h; sourceTree = "<group>"; };
+		F17E3BC01BC81C8F0075CA99 /* LikeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LikeButton.m; sourceTree = "<group>"; };
 		F186917D1BB1016C0054A914 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F18691811BB1016C0054A914 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F18691831BB1016C0054A914 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -165,6 +168,8 @@
 				F1EA7CAF1BBB201F00003A42 /* LoginViewController.m */,
 				F17E3BBC1BC7F6CA0075CA99 /* CircleSpinnerView.h */,
 				F17E3BBD1BC7F6CA0075CA99 /* CircleSpinnerView.m */,
+				F17E3BBF1BC81C8F0075CA99 /* LikeButton.h */,
+				F17E3BC01BC81C8F0075CA99 /* LikeButton.m */,
 				F186918C1BB1016C0054A914 /* Assets.xcassets */,
 				F18691911BB1016C0054A914 /* Info.plist */,
 				F18691801BB1016C0054A914 /* Supporting Files */,
@@ -367,6 +372,7 @@
 				F116E6041BB220B100AC9FD6 /* Comment.m in Sources */,
 				F16FA5BC1BB2E93D00B5C6C9 /* MediaTableViewCell.m in Sources */,
 				F116E6011BB21F4300AC9FD6 /* Media.m in Sources */,
+				F17E3BC11BC81C8F0075CA99 /* LikeButton.m in Sources */,
 				F18691851BB1016C0054A914 /* AppDelegate.m in Sources */,
 				F1EA7CB01BBB201F00003A42 /* LoginViewController.m in Sources */,
 				F116E6071BB2232000AC9FD6 /* DataSource.m in Sources */,
