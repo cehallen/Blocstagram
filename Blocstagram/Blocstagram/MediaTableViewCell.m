@@ -212,8 +212,7 @@ static NSParagraphStyle *paragraphStyle;
     // problem is here
 //    self.likesLabel.text = mediaItem.likesCount;
     
-//    self.label.text = [NSString stringWithFormat:@"Razem: %@", [total stringValue]];
-    self.likesLabel.text = [NSString stringWithFormat:@"%@", [mediaItem stringValue]];
+//    self.likesLabel.text = [NSString stringWithFormat:@"%@", [mediaItem stringValue]];
     
     
     /*
