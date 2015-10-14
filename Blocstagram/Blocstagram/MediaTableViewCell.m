@@ -209,7 +209,26 @@ static NSParagraphStyle *paragraphStyle;
     self.commentLabel.attributedText = [self commentString];
     self.likeButton.likeButtonState = mediaItem.likeState;
     // as39
-//    self.likesLabel.text = mediaItem.likesCount;
+    // problem is here
+    self.likesLabel.text = mediaItem.likesCount;
+    
+    /*
+    NSNumber *numLikes = mediaItem.likesCount;
+    self.likesLabel.text = [numLikes stringValue];
+    */
+     
+    /*
+    NSLog(@"likes count from mediatableviewcell:  %@", mediaItem.likesCount);  // √
+    
+    if ([mediaItem.likesCount isKindOfClass:[NSString class]]) {
+        NSLog(@"mediaItem.likesCount *IS* NSString");
+    } else if ([mediaItem.likesCount isKindOfClass:[NSNumber class]]) {
+        NSLog(@"mediaItem.likesCount *IS* NSNumber");  // ding ding ding!  it's nsnumber.
+    } else {
+        NSLog(@"mediaItem.likesCount *IS NOT* NSString, NSNumber");  // this runs.  seems I must converts to NSString before setting to likesLabel.text
+    }
+     */
+    
 }
 
 

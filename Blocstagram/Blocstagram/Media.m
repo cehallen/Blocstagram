@@ -53,7 +53,7 @@
         // as39
 //        self.likesCount = [NSString stringWithFormat:@"%ld", mediaDictionary[@"likes"][@"count"]];
         self.likesCount = mediaDictionary[@"likes"][@"count"];  // √
-        NSLog(@"SELF.LIKESCOUNT:  %@", self.likesCount);  // √
+//        NSLog(@"SELF.LIKESCOUNT:  %@", self.likesCount);  // √
 //        NSLog(@"NUMBER OF LIKES:  %@", mediaDictionary[@"likes"][@"count"]);
     }
     
