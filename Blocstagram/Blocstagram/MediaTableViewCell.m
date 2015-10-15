@@ -226,7 +226,7 @@ static NSParagraphStyle *paragraphStyle;
     self.mediaImageView.image = _mediaItem.image;
     self.usernameAndCaptionLabel.attributedText = [self usernameAndCaptionString];
     self.commentLabel.attributedText = [self commentString];
-    self.likeButton.likeButtonState = mediaItem.likeState;
+    self.likeButton.likeButtonState = mediaItem.likeState; // this is key, as it will trigger the button to change its look as the mediaItem is toggled
     
     // as39
 
