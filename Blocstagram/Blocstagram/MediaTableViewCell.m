@@ -23,6 +23,8 @@
 @property (nonatomic, strong) NSLayoutConstraint *imageHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *usernameAndCaptionLabelHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *commentLabelHeightConstraint;
+// as39
+//@property (nonatomic, strong) NSLayoutConstraint *likesLabelHeightConstraint;
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
@@ -90,7 +92,14 @@ static NSParagraphStyle *paragraphStyle;
         // as39
         self.likesLabel = [[UILabel alloc] init];
         self.likesLabel.numberOfLines = 0;
+//        self.likesLabel.backgroundColor = usernameLabelGray;
         self.likesLabel.backgroundColor = [UIColor greenColor];
+        // http://stackoverflow.com/questions/16009405/uilabel-sizetofit-doesnt-work-with-autolayout-ios6
+        // note that with autolayout, if sides, width, or top are pinned, the height will automatically grow and shrink vertically to fit contents... http://stackoverflow.com/questions/16009405/uilabel-sizetofit-doesnt-work-with-autolayout-ios6/16369336#16369336
+        // so what's happening here?  not shrinking
+        [self.likesLabel sizeToFit];
+
+        
         
         self.commentLabel = [[UILabel alloc] init];
         self.commentLabel.numberOfLines = 0;
@@ -98,7 +107,8 @@ static NSParagraphStyle *paragraphStyle;
         
         self.likeButton = [[LikeButton alloc] init];
         [self.likeButton addTarget:self action:@selector(likePressed:) forControlEvents:UIControlEventTouchUpInside];
-        self.likeButton.backgroundColor = usernameLabelGray;
+//        self.likeButton.backgroundColor = usernameLabelGray;
+        self.likeButton.backgroundColor = [UIColor yellowColor];
         
         for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton, self.likesLabel]) {
             [self.contentView addSubview:view];
@@ -116,6 +126,10 @@ static NSParagraphStyle *paragraphStyle;
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_commentLabel]|" options:kNilOptions metrics:nil views:viewDictionary]];
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_mediaImageView][_usernameAndCaptionLabel][_commentLabel]" options:kNilOptions metrics:nil views:viewDictionary]];
+        
+        // as39
+//        self.likesLabelHeightConstraint = [NSLayoutConstraint constraintWithItem:_likesLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:100];
+//        self.likesLabelHeightConstraint.identifier = @"Likes label height constraint";
         
         // (height constraints being set by plopping into the items made above.. ?)
         self.imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_mediaImageView
@@ -145,7 +159,7 @@ static NSParagraphStyle *paragraphStyle;
                                                                           constant:100];
         self.commentLabelHeightConstraint.identifier = @"Comment label height constraint";
         
-        [self.contentView addConstraints:@[self.imageHeightConstraint, self.usernameAndCaptionLabelHeightConstraint, self.commentLabelHeightConstraint]];
+        [self.contentView addConstraints:@[self.imageHeightConstraint, self.usernameAndCaptionLabelHeightConstraint, self.commentLabelHeightConstraint/*, self.likesLabelHeightConstraint*/]];
 
     }
     return self;
@@ -183,6 +197,10 @@ static NSParagraphStyle *paragraphStyle;
         CGSize usernameLabelSize = [self.usernameAndCaptionLabel sizeThatFits:maxSize];  // (seems like "find the best size that fits inside this max size".  NOT creating a CGSize with a gigantic maxed out height.  creating one that is it's best intrinsic size while fitting inside the maxSize)
         CGSize commentLabelSize = [self.commentLabel sizeThatFits:maxSize];
         
+        // as39
+//        CGSize likesLabelSize = [self.likesLabel sizeThatFits:maxSize];
+//        self.likesLabelHeightConstraint.constant = likesLabelSize.height == 0 ? 0 : likesLabelSize.height + 20;
+        
 //        self.usernameAndCaptionLabelHeightConstraint.constant = usernameLabelSize.height + 20;
         self.usernameAndCaptionLabelHeightConstraint.constant = usernameLabelSize.height == 0 ? 0 : usernameLabelSize.height + 20;
         
@@ -208,32 +226,25 @@ static NSParagraphStyle *paragraphStyle;
     self.usernameAndCaptionLabel.attributedText = [self usernameAndCaptionString];
     self.commentLabel.attributedText = [self commentString];
     self.likeButton.likeButtonState = mediaItem.likeState;
+    
     // as39
-    // problem is here
-//    self.likesLabel.text = mediaItem.likesCount;
+
+//    self.likesLabel.text = mediaItem.likesCount;  // this doesn't work directly for some reason.  it's NSNumber.. kind of.  anyway, the below works.
+//    self.likesLabel.text = [NSString stringWithFormat:@"%@", mediaItem.likesCount];
     
-//    self.likesLabel.text = [NSString stringWithFormat:@"%@", [mediaItem stringValue]];
-    
-    
-    /*
-    NSNumber *numLikes = mediaItem.likesCount;
-    self.likesLabel.text = [numLikes stringValue];
-    */
-     
-    /*
-    NSLog(@"likes count from mediatableviewcell:  %@", mediaItem.likesCount);  // √
-    
-    if ([mediaItem.likesCount isKindOfClass:[NSString class]]) {
-        NSLog(@"mediaItem.likesCount *IS* NSString");
-    } else if ([mediaItem.likesCount isKindOfClass:[NSNumber class]]) {
-        NSLog(@"mediaItem.likesCount *IS* NSNumber");  // ding ding ding!  it's nsnumber.
-    } else {
-        NSLog(@"mediaItem.likesCount *IS NOT* NSString, NSNumber");  // this runs.  seems I must converts to NSString before setting to likesLabel.text
-    }
-     */
+    // as39 (2)
+    NSString *numLikesString = [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@", mediaItem.likesCount]];
+    self.likesLabel.attributedText = [self likesString:numLikesString];
+    self.likesLabel.textAlignment = NSTextAlignmentRight;
     
 }
 
+- (NSAttributedString *) likesString:(NSString *)numLikesString {
+    CGFloat likesFontSize = 12;
+    NSString *baseString = numLikesString;
+    NSMutableAttributedString *mutableLikesString = [[NSMutableAttributedString alloc] initWithString:baseString attributes:@{NSFontAttributeName: [lightFont fontWithSize:likesFontSize]}];
+    return mutableLikesString;
+}
 
 - (NSAttributedString *) usernameAndCaptionString {
     // #1
