@@ -95,9 +95,10 @@ static NSParagraphStyle *paragraphStyle;
 //        self.likesLabel.backgroundColor = usernameLabelGray;
         self.likesLabel.backgroundColor = [UIColor greenColor];
         // http://stackoverflow.com/questions/16009405/uilabel-sizetofit-doesnt-work-with-autolayout-ios6
-        // note that with autolayout, if sides, width, or top are pinned, the height will automatically grow and shrink vertically to fit contents... http://stackoverflow.com/questions/16009405/uilabel-sizetofit-doesnt-work-with-autolayout-ios6/16369336#16369336
+        // note that with autolayout, if sides, width, or top are pinned, the height will automatically grow and shrink vertically to fit contents...
         // so what's happening here?  not shrinking
-        [self.likesLabel sizeToFit];
+//        [self.likesLabel sizeToFit];
+        
 
         
         
