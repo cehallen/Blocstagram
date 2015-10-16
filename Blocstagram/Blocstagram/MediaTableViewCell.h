@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class Media, MediaTableViewCell;
+@class Media, MediaTableViewCell, ComposeCommentView;
 
 @protocol MediaTableViewCellDelegate <NSObject>
 
@@ -44,6 +44,10 @@
 // "Objective-C uses angle brackets to indicate conformance to a protocol. This example declares a weak property for a generic object pointer that conforms to the XYZPieChartViewDataSource [MediaTableViewCellDelegate] protocol."
 // it's marked as 'weak' to avoid a strone reference cycle.  when the delegate gives up relationship to our cell here, there will be no strong reference from here to the delegate obj, which will be deallocated along with the media cell here.  anyway, read their docs.
 
+@property (nonatomic, strong, readonly) ComposeCommentView *commentView;
+
 + (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width;
+
+- (void) stopComposingComment;
 
 @end

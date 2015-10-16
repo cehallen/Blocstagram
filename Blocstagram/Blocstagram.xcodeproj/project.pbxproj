@@ -14,6 +14,7 @@
 		F116E6041BB220B100AC9FD6 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = F116E6031BB220B100AC9FD6 /* Comment.m */; settings = {ASSET_TAGS = (); }; };
 		F116E6071BB2232000AC9FD6 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F116E6061BB2232000AC9FD6 /* DataSource.m */; settings = {ASSET_TAGS = (); }; };
 		F16FA5BC1BB2E93D00B5C6C9 /* MediaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F16FA5BB1BB2E93D00B5C6C9 /* MediaTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		F16FF0FE1BD18748000C16EF /* ComposeCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F16FF0FD1BD18748000C16EF /* ComposeCommentView.m */; settings = {ASSET_TAGS = (); }; };
 		F17E3BBE1BC7F6CA0075CA99 /* CircleSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F17E3BBD1BC7F6CA0075CA99 /* CircleSpinnerView.m */; settings = {ASSET_TAGS = (); }; };
 		F17E3BC11BC81C8F0075CA99 /* LikeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F17E3BC01BC81C8F0075CA99 /* LikeButton.m */; settings = {ASSET_TAGS = (); }; };
 		F18691821BB1016C0054A914 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F18691811BB1016C0054A914 /* main.m */; };
@@ -58,6 +59,8 @@
 		F116E6061BB2232000AC9FD6 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
 		F16FA5BA1BB2E93D00B5C6C9 /* MediaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaTableViewCell.h; sourceTree = "<group>"; };
 		F16FA5BB1BB2E93D00B5C6C9 /* MediaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTableViewCell.m; sourceTree = "<group>"; };
+		F16FF0FC1BD18748000C16EF /* ComposeCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeCommentView.h; sourceTree = "<group>"; };
+		F16FF0FD1BD18748000C16EF /* ComposeCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeCommentView.m; sourceTree = "<group>"; };
 		F17E3BBC1BC7F6CA0075CA99 /* CircleSpinnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleSpinnerView.h; sourceTree = "<group>"; };
 		F17E3BBD1BC7F6CA0075CA99 /* CircleSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleSpinnerView.m; sourceTree = "<group>"; };
 		F17E3BBF1BC81C8F0075CA99 /* LikeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LikeButton.h; sourceTree = "<group>"; };
@@ -170,6 +173,8 @@
 				F17E3BBD1BC7F6CA0075CA99 /* CircleSpinnerView.m */,
 				F17E3BBF1BC81C8F0075CA99 /* LikeButton.h */,
 				F17E3BC01BC81C8F0075CA99 /* LikeButton.m */,
+				F16FF0FC1BD18748000C16EF /* ComposeCommentView.h */,
+				F16FF0FD1BD18748000C16EF /* ComposeCommentView.m */,
 				F186918C1BB1016C0054A914 /* Assets.xcassets */,
 				F18691911BB1016C0054A914 /* Info.plist */,
 				F18691801BB1016C0054A914 /* Supporting Files */,
@@ -376,6 +381,7 @@
 				F18691851BB1016C0054A914 /* AppDelegate.m in Sources */,
 				F1EA7CB01BBB201F00003A42 /* LoginViewController.m in Sources */,
 				F116E6071BB2232000AC9FD6 /* DataSource.m in Sources */,
+				F16FF0FE1BD18748000C16EF /* ComposeCommentView.m in Sources */,
 				F18691821BB1016C0054A914 /* main.m in Sources */,
 				F18691CC1BB187630054A914 /* ImagesTableViewController.m in Sources */,
 			);
