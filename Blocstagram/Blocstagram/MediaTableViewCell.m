@@ -24,7 +24,7 @@
 @property (nonatomic, strong) NSLayoutConstraint *usernameAndCaptionLabelHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *commentLabelHeightConstraint;
 // as39
-//@property (nonatomic, strong) NSLayoutConstraint *likesLabelHeightConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *likesLabelHeightConstraint;
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
@@ -74,6 +74,10 @@ static NSParagraphStyle *paragraphStyle;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];  // where does these arguments come from?  ie, where are we manually calling this with arguments?  or are the arguments automatic too
     if (self) {
         // Initialization code
+        
+        // as39: background of whole cell
+        self.contentView.backgroundColor = usernameLabelGray;
+        
         self.mediaImageView = [[UIImageView alloc] init];
         self.mediaImageView.userInteractionEnabled = YES;
         
@@ -92,12 +96,7 @@ static NSParagraphStyle *paragraphStyle;
         // as39
         self.likesLabel = [[UILabel alloc] init];
         self.likesLabel.numberOfLines = 0;
-//        self.likesLabel.backgroundColor = usernameLabelGray;
-        self.likesLabel.backgroundColor = [UIColor greenColor];
-        // http://stackoverflow.com/questions/16009405/uilabel-sizetofit-doesnt-work-with-autolayout-ios6
-        // note that with autolayout, if sides, width, or top are pinned, the height will automatically grow and shrink vertically to fit contents...
-        // so what's happening here?  not shrinking
-//        [self.likesLabel sizeToFit];
+        self.likesLabel.backgroundColor = usernameLabelGray;
         
 
         
@@ -108,8 +107,7 @@ static NSParagraphStyle *paragraphStyle;
         
         self.likeButton = [[LikeButton alloc] init];
         [self.likeButton addTarget:self action:@selector(likePressed:) forControlEvents:UIControlEventTouchUpInside];
-//        self.likeButton.backgroundColor = usernameLabelGray;
-        self.likeButton.backgroundColor = [UIColor yellowColor];
+        self.likeButton.backgroundColor = usernameLabelGray;
         
         for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton, self.likesLabel]) {
             [self.contentView addSubview:view];
@@ -117,22 +115,18 @@ static NSParagraphStyle *paragraphStyle;
         }
         
         
-        // (visual format string way to 'visually' layout with auto-layout.  notice you refer to the IVAR here not the property...  still unclear about when to use IVAR's, except when overriding the getter or setter methods a la ch29)
+        // (visual format string way to 'visually' layout with auto-layout.  notice you refer to the IVAR here not the property...  still unclear about when to use IVAR's, except when overriding the getter or setter methods a la ch29)  try http://snapkit.io/
         NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel, _likeButton, _likesLabel);
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mediaImageView]|" options:kNilOptions metrics:nil views:viewDictionary]];
 
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel][_likesLabel(==38)][_likeButton(==38)]|" options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:nil views:viewDictionary]];  // √
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel][_likesLabel(==38)][_likeButton(==38)]|" options:NSLayoutFormatAlignAllTop metrics:nil views:viewDictionary]];
 
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_commentLabel]|" options:kNilOptions metrics:nil views:viewDictionary]];
         
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_mediaImageView][_usernameAndCaptionLabel][_commentLabel]" options:kNilOptions metrics:nil views:viewDictionary]];
         
-        // as39
-//        self.likesLabelHeightConstraint = [NSLayoutConstraint constraintWithItem:_likesLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:100];
-//        self.likesLabelHeightConstraint.identifier = @"Likes label height constraint";
-        
-        // (height constraints being set by plopping into the items made above.. ?)
+
         self.imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_mediaImageView
                                                                   attribute:NSLayoutAttributeHeight
                                                                   relatedBy:NSLayoutRelationEqual
@@ -141,6 +135,17 @@ static NSParagraphStyle *paragraphStyle;
                                                                  multiplier:1
                                                                    constant:100];
         self.imageHeightConstraint.identifier = @"Image height constraint";
+        
+        // as39
+        self.likesLabelHeightConstraint = [NSLayoutConstraint constraintWithItem:_likesLabel
+                                                                  attribute:NSLayoutAttributeHeight
+                                                                  relatedBy:NSLayoutRelationEqual
+                                                                     toItem:nil
+                                                                  attribute:NSLayoutAttributeNotAnAttribute
+                                                                 multiplier:1
+                                                                   constant:32];
+        self.likesLabelHeightConstraint.identifier = @"Likes label height constraint";
+        
         
         self.usernameAndCaptionLabelHeightConstraint = [NSLayoutConstraint constraintWithItem:_usernameAndCaptionLabel
                                                                                     attribute:NSLayoutAttributeHeight
@@ -160,7 +165,7 @@ static NSParagraphStyle *paragraphStyle;
                                                                           constant:100];
         self.commentLabelHeightConstraint.identifier = @"Comment label height constraint";
         
-        [self.contentView addConstraints:@[self.imageHeightConstraint, self.usernameAndCaptionLabelHeightConstraint, self.commentLabelHeightConstraint/*, self.likesLabelHeightConstraint*/]];
+        [self.contentView addConstraints:@[self.imageHeightConstraint, self.usernameAndCaptionLabelHeightConstraint, self.commentLabelHeightConstraint, self.likesLabelHeightConstraint]];
 
     }
     return self;

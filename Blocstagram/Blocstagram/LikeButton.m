@@ -24,12 +24,12 @@
     self = [super init];
     
     if (self) {
-        self.spinnerView = [[CircleSpinnerView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        self.spinnerView = [[CircleSpinnerView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
         [self addSubview:self.spinnerView];
         
         self.imageView.contentMode = UIViewContentModeScaleAspectFit;  // apparently UIButtons come with 2 imageViews automatically
         
-        self.contentEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 10);  // makes the button (and tappable area) a bit bigger
+        self.contentEdgeInsets = UIEdgeInsetsMake(2, 5, 5, 10);  // makes the button (and tappable area) a bit bigger
         self.contentVerticalAlignment = UIControlContentVerticalAlignmentTop;
         
         self.likeButtonState = LikeStateNotLiked;
