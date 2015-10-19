@@ -45,7 +45,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
+                                                 name:UIKeyboardWillShowNotification  // this is an auto notification.  ie, we don't have to explicitly send a notification; it shoots every time a keyboard is about to show.  same for hiding below.  so in our notification for keyboard handling we have the @selector action of keyboardWillShow defined ImagesTableVC, which does the stuff with scrolling if the textview is overlapped by the keyboard, and
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -121,6 +121,15 @@
     }
 }
 
+
+
+/*
+ Docs: "Providing an estimate the height of rows can improve the user experience when loading the table view. If the table contains variable height rows, it might be expensive to calculate all their heights and so lead to a longer load time. Using estimation allows you to defer some of the cost of geometry calculation from load time to scrolling time."
+ 
+ Because in a UITableView, each time it loads, all rows call their delegates to calculate heights which is slow.  Using this estimatedHeight method gives an approx height and defers the exact height calc until row is scrolled to.
+ 
+ From the TableView docs: "Every time a table view is displayed, it calls tableView:heightForRowAtIndexPath: on the delegate for each of its rows, which can result in a significant performance problem with table views having a large number of rows (approximately 1000 or more). See also tableView:estimatedHeightForRowAtIndexPath:."
+ */
 - (CGFloat) tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
     if (item.image) {
@@ -221,6 +230,7 @@
 
 - (void) cellWillStartComposingComment:(MediaTableViewCell *)cell {
     self.lastSelectedCommentView = (UIView *)cell.commentView;
+    // this goes on to help determine if keyboard is overlapping the comment box.  implemented in the keyboard handling methods below.
 }
 
 - (void) cell:(MediaTableViewCell *)cell didComposeComment:(NSString *)comment {
@@ -258,7 +268,7 @@
     }
     
     if (heightToScroll > 0) {
-        contentInsets.bottom += heightToScroll;
+        contentInsets.bottom += heightToScroll;  // these are animated down below by height to scroll amount
         scrollIndicatorInsets.bottom += heightToScroll;
         contentOffset.y += heightToScroll;
         
@@ -267,7 +277,7 @@
         
         NSTimeInterval duration = durationNumber.doubleValue;
         UIViewAnimationCurve curve = curveNumber.unsignedIntegerValue;
-        UIViewAnimationOptions options = curve << 16;
+        UIViewAnimationOptions options = curve << 16;  // look this << shovel up.
         
         [UIView animateWithDuration:duration delay:0 options:options animations:^{
             self.tableView.contentInset = contentInsets;

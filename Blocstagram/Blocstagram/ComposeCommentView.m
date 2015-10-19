@@ -98,7 +98,7 @@
     }
 }
 
-- (void) setText:(NSString *)text {
+- (void) setText:(NSString *)text {  // is this originally auto?  I guess the first three lines are.. if this is commented out little goes wrong.  I tested it, and seems pretty much the same.  we just add a call to isWritingComment to: layout subviews.  (if layout subviews is there, how did it work when commented out?  anyway...)
     _text = text;
     self.textView.text = text;
     self.textView.userInteractionEnabled = YES;
@@ -120,7 +120,7 @@
 
 #pragma mark - UITextViewDelegate
 
-- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView { // I guess this is autocalled when the textview is tapped, as I don't see code for that other than on the button
     [self setIsWritingComment:YES animated:YES];
     [self.delegate commentViewWillStartEditing:self];
     
