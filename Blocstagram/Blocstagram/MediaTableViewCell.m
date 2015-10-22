@@ -278,7 +278,7 @@ static NSParagraphStyle *paragraphStyle;
 
 #pragma mark - ComposeCommentViewDelegate
 
-- (void) commentViewDidPressCommentButton:(ComposeCommentView *)sender {
+- (void) commentViewDidPressCommentButton:(ComposeCommentView *)sender {  // delegate pattern note: the method is defined here but not declared as a property in this (the delegate's) .m or .h file.  the declaration of the method only occurs in the delegator's .h file, in the @protocol block.
     [self.delegate cell:self didComposeComment:self.mediaItem.temporaryComment];
 }
 

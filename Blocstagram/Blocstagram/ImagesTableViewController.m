@@ -13,8 +13,9 @@
 #import "Comment.h"
 #import "MediaTableViewCell.h"
 #import "MediaFullScreenViewController.h"
+#import "CameraViewController.h"
 
-@interface ImagesTableViewController () <MediaTableViewCellDelegate>  // this is 1 marker of the delegate, to accept that protocol defined in MediaTableViewCell. the 2nd is line~ 135 `cell.delegate = self` to specifically codify the delegate-delegating relationship between instances.  and the 3rd is simply the `#import "MediaTableViewCell.h` if not done already
+@interface ImagesTableViewController () <MediaTableViewCellDelegate, CameraViewControllerDelegate>  // conforming to these protocols set in the delegators. methods declared there too, defined here
 @property (nonatomic, weak) UIImageView *lastTappedImageView;  // found this in ch40 missing from before.  missing it wasn't causing problems...  not sure what it's for
 @property (nonatomic, weak) UIView *lastSelectedCommentView;
 @property (nonatomic, assign) CGFloat lastKeyboardAdjustment;
@@ -42,6 +43,12 @@
     [self.tableView registerClass:[MediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"];
     
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] ||
+        [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+        UIBarButtonItem *cameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(cameraPressed:)];
+        self.navigationItem.rightBarButtonItem = cameraButton;
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -158,6 +165,25 @@
     [self infiniteScrollIfNecessary];
 }
 
+#pragma mark - Camera and CameraViewControllerDelegate
+
+- (void) cameraPressed:(UIBarButtonItem *) sender {
+    CameraViewController *cameraVC = [[CameraViewController alloc] init];
+    cameraVC.delegate = self;
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cameraVC];
+    [self presentViewController:nav animated:YES completion:nil];
+    return;
+}
+
+- (void) cameraViewController:(CameraViewController *)cameraViewController didCompleteWithImage:(UIImage *)image {
+    [cameraViewController dismissViewControllerAnimated:YES completion:^{
+        if (image) {
+            NSLog(@"Got an image!");
+        } else {
+            NSLog(@"Closed without an image.");
+        }
+    }];
+}
 
 #pragma mark - Table view data source
 
