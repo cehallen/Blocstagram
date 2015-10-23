@@ -26,6 +26,9 @@
 
 @property (nonatomic, strong) CameraToolbar *cameraToolbar;
 
+// as41b
+- (void) alertWithActionTitle:(NSString *)title andMessage:(NSString *) message;
+
 @end
 
 @implementation CameraViewController
@@ -153,6 +156,7 @@
 - (void) createCancelButton {
     UIImage *cancelImage = [UIImage imageNamed:@"x"];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithImage:cancelImage style:UIBarButtonItemStyleDone target:self action:@selector(cancelPressed:)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
 }
 
 #pragma mark - Event Handling
@@ -263,8 +267,8 @@
             UIImage *image = [UIImage imageWithData:imageData scale:[UIScreen mainScreen].scale];
             
             // #11
-            image = [image imageWithFixedOrientation];
-            image = [image imageResizedToMatchAspectRatioOfSize:self.captureVideoPreviewLayer.bounds.size];
+//            image = [image imageWithFixedOrientation]; // as41
+//            image = [image imageResizedToMatchAspectRatioOfSize:self.captureVideoPreviewLayer.bounds.size]; // as41
             
             // #12
             UIView *leftLine = self.verticalLines.firstObject;
@@ -280,7 +284,9 @@
             CGRect cropRect = gridRect;
             cropRect.origin.x = (CGRectGetMinX(gridRect) + (image.size.width - CGRectGetWidth(gridRect)) / 2);
             
-            image = [image imageCroppedToRect:cropRect];
+//            image = [image imageCroppedToRect:cropRect];  // as41
+            // as41
+            image = [image imageByScalingToSize:self.captureVideoPreviewLayer.bounds.size andCroppingWithRect:cropRect];
             
             // #13
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -300,6 +306,22 @@
     }];
 }
 
+
+/*
+ UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Camera Permission Denied", @"camera permission denied title")
+ message:NSLocalizedString(@"This app doesn't have permission to use the camera; please update your privacy settings.", @"camera permission denied recovery suggestion")
+ preferredStyle:UIAlertControllerStyleAlert];
+ [alertVC addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK button") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+ [self.delegate cameraViewController:self didCompleteWithImage:nil];
+ }]];
+ 
+ [self presentViewController:alertVC animated:YES completion:nil];
+ */
+
+// as41: alert VC code.  params: localized string for title, localized string for message.
+- (void) alertWithActionTitle:(NSString *)title andMessage:(NSString *) message {
+    
+}
 
 
 /*

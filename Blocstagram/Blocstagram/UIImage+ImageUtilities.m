@@ -8,6 +8,7 @@
 
 #import "UIImage+ImageUtilities.h"
 
+
 @implementation UIImage (ImageUtilities)
 
 // even though this affine stuff doesn't make sense, you can just reuse this code if you need it in the future
@@ -142,6 +143,16 @@
     UIImage *image = [UIImage imageWithCGImage:imageRef scale:self.scale orientation:self.imageOrientation];
     CGImageRelease(imageRef);
     return image;
+}
+
+// as41: not sure if this way works.  can't test it right now (no cable to hookup phone to comp)
+- (UIImage *) imageByScalingToSize:(CGSize)size andCroppingWithRect:(CGRect)rect {
+    UIImage *selfCopy = self;
+    selfCopy = [selfCopy imageWithFixedOrientation];
+    selfCopy = [selfCopy imageResizedToMatchAspectRatioOfSize:size];
+    selfCopy = [selfCopy imageCroppedToRect:rect];
+    
+    return selfCopy;
 }
 
 
