@@ -166,7 +166,7 @@
     [self infiniteScrollIfNecessary];
 }
 
-#pragma mark - Camera, CameraViewControllerDelegate and ImageLibraryViewControllerDelegate
+#pragma mark - Camera, CameraViewControllerDelegate, and ImageLibraryViewControllerDelegate
 
 - (void) cameraPressed:(UIBarButtonItem *) sender {
 //    CameraViewController *cameraVC = [[CameraViewController alloc] init];

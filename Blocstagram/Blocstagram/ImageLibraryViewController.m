@@ -97,7 +97,7 @@
         [cell.contentView addSubview:imageView];
     }
     
-    if (cell.tag != 0) {
+    if (cell.tag != 0) { // don't get this
         [[PHImageManager defaultManager] cancelImageRequest:(PHImageRequestID)cell.tag];
     }
     
@@ -107,7 +107,7 @@
     cell.tag = [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:flowLayout.itemSize contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage *result, NSDictionary *info) {
         UICollectionViewCell *cellToUpdate = [collectionView cellForItemAtIndexPath:indexPath];
         
-        if (cellToUpdate) {
+        if (cellToUpdate) { // this is funky to me.  it's done so you can reuse..  but I don't fully get the arbitrary tag name thing.  A: each cell, when created can have multiple image views (in the contentView of the cell) attached, and those image views are retrieved by tag (as you see below).  so every cell that's been made while scrolling has a tag 54321.  when you're in that cell and want to attach an image you get the 'right' image view (even though we'll only ever have one in each cell) by calling it with it's tag.  then you set the imageView's image as 'result'.  
             UIImageView *imageView = (UIImageView *)[cellToUpdate.contentView viewWithTag:imageViewTag];
             imageView.image = result;
         }

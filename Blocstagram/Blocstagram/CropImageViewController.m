@@ -16,6 +16,10 @@
 @property (nonatomic, strong) CropBox *cropBox;
 @property (nonatomic, assign) BOOL hasLoadedOnce;
 
+// as42
+@property (nonatomic, strong) UIToolbar *topView;
+@property (nonatomic, strong) UIToolbar *bottomView;
+
 // dummy you thought you had to declare private methods here.  nah.. just properties.  methods declared in .h only if they are going public.  here it works just like any program file.  finds it on the page.  not sure if order matters.  probably some hoisting stuff going on.
 
 @end
@@ -30,6 +34,15 @@
         self.media.image = sourceImage;
         
         self.cropBox = [CropBox new];
+        
+        // as 42
+        self.topView = [UIToolbar new];
+        self.bottomView = [UIToolbar new];
+        UIColor *whiteBG = [UIColor colorWithWhite:1.0 alpha:.15];
+        self.topView.barTintColor = whiteBG;
+        self.bottomView.barTintColor = whiteBG;
+        self.topView.alpha = 0.5;
+        self.bottomView.alpha = 0.5;
     }
     
     return self;
@@ -40,7 +53,13 @@
     
     self.view.clipsToBounds = YES;
     
-    [self.view addSubview:self.cropBox];
+    // as42
+    //    [self.view addSubview:self.cropBox];
+    NSMutableArray *views = [@[self.cropBox, self.topView, self.bottomView] mutableCopy];
+    for (UIView *view in views) {
+        [self.view addSubview:view];
+    }
+    
     
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Crop", @"Crop command") style:UIBarButtonItemStyleDone target:self action:@selector(cropPressed:)];
     
@@ -49,7 +68,7 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
 }
 
 - (void) viewWillLayoutSubviews {
@@ -73,6 +92,11 @@
         self.scrollView.zoomScale = self.scrollView.minimumZoomScale;
         self.hasLoadedOnce = YES;
     }
+    
+    // as42
+    self.topView.frame = CGRectMake(0, 0, edgeSize, CGRectGetMinY(self.cropBox.frame));
+    CGFloat bottomViewHeight = CGRectGetMaxY(self.view.frame) - CGRectGetMaxY(self.cropBox.frame);
+    self.bottomView.frame = CGRectMake(0, CGRectGetMaxY(self.cropBox.frame), edgeSize, bottomViewHeight);
 }
 
 - (void) cropPressed:(UIBarButtonItem *)sender {
