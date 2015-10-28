@@ -15,6 +15,7 @@
 #import "MediaFullScreenViewController.h"
 #import "CameraViewController.h"
 #import "ImageLibraryViewController.h"
+#import "PostToInstagramViewController.h"
 
 @interface ImagesTableViewController () <MediaTableViewCellDelegate, CameraViewControllerDelegate, ImageLibraryViewControllerDelegate>  // conforming to these protocols set in the delegators. methods declared there too, defined here
 @property (nonatomic, weak) UIImageView *lastTappedImageView;  // found this in ch40 missing from before.  missing it wasn't causing problems...  not sure what it's for
@@ -192,24 +193,22 @@
     return;
 }
 
+- (void) handleImage:(UIImage *)image withNavigationController:(UINavigationController *)nav {
+    if (image) {
+        PostToInstagramViewController *postVC = [[PostToInstagramViewController alloc] initWithImage:image];
+        
+        [nav pushViewController:postVC animated:YES];
+    } else {
+        [nav dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
 - (void) cameraViewController:(CameraViewController *)cameraViewController didCompleteWithImage:(UIImage *)image {
-    [cameraViewController dismissViewControllerAnimated:YES completion:^{
-        if (image) {
-            NSLog(@"Got an image!");
-        } else {
-            NSLog(@"Closed without an image.");
-        }
-    }];
+    [self handleImage:image withNavigationController:cameraViewController.navigationController];
 }
 
 - (void) imageLibraryViewController:(ImageLibraryViewController *)imageLibraryViewController didCompleteWithImage:(UIImage *)image {
-    [imageLibraryViewController dismissViewControllerAnimated:YES completion:^{
-        if (image) {
-            NSLog(@"Got an image!");
-        } else {
-            NSLog(@"Closed without an image.");
-        }
-    }];
+    [self handleImage:image withNavigationController:imageLibraryViewController.navigationController]; // this is cool, how you can set the nav controller to push a view to (done with this nav VC, up in 'handleImage..' method
 }
 
 #pragma mark - Table view data source

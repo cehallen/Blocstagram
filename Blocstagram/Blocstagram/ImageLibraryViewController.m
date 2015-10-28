@@ -46,7 +46,7 @@
     NSInteger divisor = width / minWidth;
     CGFloat cellSize = width / divisor;
     
-    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
+    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout; // notice this funky skipping a step setting to self.xyz.. probably possible bc these ImageLibraryVC's automatically have the property of UICollectionViewFlowLayout... you just have to initialize them anyway??  anywho
     flowLayout.itemSize = CGSizeMake(cellSize, cellSize);
     flowLayout.minimumInteritemSpacing = 0;
     flowLayout.minimumLineSpacing = 0;
