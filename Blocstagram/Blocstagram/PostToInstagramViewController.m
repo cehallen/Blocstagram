@@ -35,7 +35,7 @@
         self.sourceImage = sourceImage;
         self.previewImageView = [[UIImageView alloc] initWithImage:self.sourceImage];  // params passed by value in obj-c, so this is a copy
         
-        self.photoFilterOperationQueue = [[NSOperationQueue alloc] init];
+        self.photoFilterOperationQueue = [[NSOperationQueue alloc] init]; // research this code too
         
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.itemSize = CGSizeMake(44, 64);
@@ -78,8 +78,10 @@
     } else {
         self.navigationItem.rightBarButtonItem = self.sendBarButton;
     }
-    
+
+    // as43 - need to change class to our new subclass's name (FilterViewCell)
     [self.filterCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+//    [self.filterCollectionView registerClass:[FilterViewCell class] forCellWithReuseIdentifier:@"cell"];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.filterCollectionView.backgroundColor = [UIColor whiteColor];
@@ -198,8 +200,17 @@
     return self.filterImages.count;
 }
 
+// as43 - here, you don't need to change the returned UICollectionViewCell to your subclass FilterViewCell
 - (UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    
+    /*
+     FilterViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+     cell.delegate = self;
+
+     
+    */
     
     static NSInteger imageViewTag = 1000;
     static NSInteger labelTag = 1001;
@@ -233,6 +244,7 @@
     return cell;
 }
 
+// Tapping of filter images handled here
 - (void) collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     self.previewImageView.image = self.filterImages[indexPath.row];
 }
@@ -257,7 +269,11 @@
             [self.filterImages addObject:image];
             [self.filterTitles addObject:filterTitle];
             
-            [self.filterCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:newIndex inSection:0]]];
+            [self.filterCollectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:newIndex inSection:0]]];  // this line doesn't make much sense..  from bloc: "On the main thread, adds the completed UIImage and filter title to the arrays, and tells the collection view that a new item is available."
+                // still don't see how we pass in the new items to add.  "You might do this when your data source object receives data for new items.."  But where are we setting the data source obj to be the filterImages/filterTitles arrays?  Is the following line by itself enough, so it automatically searches for array properties and adds them??  seems unlikely..  anyway, this line is important
+                // self.filterCollectionView.dataSource = self;
+                // tl;dr where is the data source for this collection view set?'ll
+                // A: up in collectionView:cellForItemAtIndexPath, you have code which sets the image and title of each cell to the corresponding item in the two arrays.  NOTE, this method here only inserts a placeholder cell at the right index location (the end).  Up there is where the right image and tags are assigned to that cell.  Phew. 
         });
     }
 }

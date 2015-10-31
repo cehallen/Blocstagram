@@ -42,7 +42,7 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshControlDidFire:) forControlEvents:UIControlEventValueChanged];
     
-    [self.tableView registerClass:[MediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"];
+    [self.tableView registerClass:[MediaTableViewCell class] forCellReuseIdentifier:@"mediaCell"]; // as43: notice this can't stay the same.  can't use 'UITableViewCell' as you would if not subclassed.
     
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
     
@@ -217,8 +217,10 @@
     return [DataSource sharedInstance].mediaItems.count;
 }
 
+
+// as43, this is useful.  example of subclassing instead of using standard UITableViewCell.  notice you don't change the return obj type to your subclass (while you do change it when 'registerClass:forCellUseIdentifier' up above.)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     MediaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mediaCell" forIndexPath:indexPath];
     cell.delegate = self;
     cell.mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
