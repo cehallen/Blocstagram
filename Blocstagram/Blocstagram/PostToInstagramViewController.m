@@ -423,6 +423,38 @@
             [self addCIImageToCollectionView:composite.outputImage withFilterTitle:NSLocalizedString(@"Film", @"Film Filter")];
         }
     }];
+    
+    // as43b - two more filters, one should be compound
+    
+    // Sepia filter
+    
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *sepiaFilter = [CIFilter filterWithName:@"CISepiaTone"];
+        
+        if (sepiaFilter) {
+            [sepiaFilter setValue:sourceCIImage forKey:kCIInputImageKey];
+            [self addCIImageToCollectionView:sepiaFilter.outputImage withFilterTitle:NSLocalizedString(@"Sepia", @"Sepia Filter")];
+        }
+    }];
+    
+    // Haunted filter
+    
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *noirFilter = [CIFilter filterWithName:@"CIPhotoEffectNoir"];
+        
+        if (noirFilter) {
+            [noirFilter setValue:sourceCIImage forKey:kCIInputImageKey];
+        }
+        
+        CIImage *noirFilterOutput = [noirFilter outputImage];
+        
+        CIFilter *colorInvertFilter = [CIFilter filterWithName:@"CIColorInvert"];
+        
+        if (colorInvertFilter) {
+            [colorInvertFilter setValue:noirFilterOutput forKey:kCIInputImageKey];
+            [self addCIImageToCollectionView:colorInvertFilter.outputImage withFilterTitle:NSLocalizedString(@"Haunted", @"Haunted Filter")];
+        }
+    }];
 
 }
 
