@@ -92,6 +92,10 @@
     
     CGFloat edgeSize = MIN(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
     
+    if (CGRectGetHeight(self.view.bounds) < edgeSize * 1.5) {
+        edgeSize /= 1.5;
+    }
+    
     self.previewImageView.frame = CGRectMake(0, self.topLayoutGuide.length, edgeSize, edgeSize); // topLayoutGuide.length as a y origin will move it past the translucent nav bar and such.  ie, all visible
     
     CGFloat buttonHeight = 50;

@@ -57,6 +57,8 @@
     options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
     
     self.result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:options];
+    
+    [self.collectionView reloadData];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
@@ -67,7 +69,6 @@
             if ([PHPhotoLibrary authorizationStatus] == PHAuthorizationStatusAuthorized) {
                 dispatch_async(dispatch_get_main_queue(), ^{  // how is this possible, unless... we weren't on the main thread to begin with?  that must be it, because how else can you run async from the main queue, on the main queue??  (the main thread is serial by nature.. can't do concurrency).  this kind of makes sense now, since UI changes should be done on the main queue (they say)
                     [self loadAssets];
-                    [self.collectionView reloadData];
                 });
             }
         }];

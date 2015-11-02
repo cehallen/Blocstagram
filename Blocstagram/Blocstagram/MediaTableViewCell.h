@@ -48,8 +48,10 @@
 // it's marked as 'weak' to avoid a strone reference cycle.  when the delegate gives up relationship to our cell here, there will be no strong reference from here to the delegate obj, which will be deallocated along with the media cell here.  anyway, read their docs.
 
 @property (nonatomic, strong, readonly) ComposeCommentView *commentView;
+@property (nonatomic, strong) UITraitCollection *overrideTraitCollection;
 
-+ (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width;
+//+ (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width;
++ (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width traitCollection:(UITraitCollection *) traitCollection;
 
 - (void) stopComposingComment;
 
