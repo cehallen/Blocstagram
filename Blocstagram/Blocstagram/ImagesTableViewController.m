@@ -189,6 +189,7 @@
     if (imageVC) {
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:imageVC];
         
+        // "In a horizontally regular environment, a popover will be used. In a compact environment, normal modal presentation is used.""
         nav.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popoverController = nav.popoverPresentationController;
         popoverController.barButtonItem = sender;

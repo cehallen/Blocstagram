@@ -9,10 +9,13 @@
 #import "MediaFullScreenViewController.h"
 #import "Media.h"  // we'll start by importing 'media' and creating a property to store it.  could your problem with importing ImagesTableVC in as35 be this simple (you want to access that specific instance of it, not make a new one).  you must learn more what's happening behind the scenes here wrt instance and memory and pointers.
 
-@interface MediaFullScreenViewController () <UIScrollViewDelegate>
+@interface MediaFullScreenViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
+
+// as44a
+@property (nonatomic, strong) UITapGestureRecognizer *tapBehind;
 
 @end
 
@@ -53,6 +56,15 @@
     
     [self.scrollView addGestureRecognizer:self.tap];
     [self.scrollView addGestureRecognizer:self.doubleTap];
+    
+    // as44a - add tap gesture to UIWindow (accessed by 'self.view.window') to dismissVC when tapping grey background (if in form sheet mode)
+    self.tapBehind = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBehindFired:)];
+    [self.tapBehind setNumberOfTapsRequired:1];
+    [self.tapBehind setCancelsTouchesInView:NO];
+    self.tapBehind.delegate = self;
+//    [self.view.window.rootViewController.view addGestureRecognizer:self.tapBehind];
+    [self.view.window addGestureRecognizer:self.tapBehind];
+//    [self.view addGestureRecognizer:self.tapBehind];
     
 }
 
@@ -111,6 +123,7 @@
     [self centerScrollView];
 }
 
+
 #pragma mark - UIScrollViewDelegate
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
@@ -143,6 +156,49 @@
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
     }
 }
+
+// as44a - not sure why this isn't working..
+// http://stackoverflow.com/questions/9102497/dismiss-modal-view-form-sheet-controller-on-outside-tap
+// http://stackoverflow.com/questions/25638409/dismiss-modal-form-sheet-view-on-outside-tap-ios-8 note the 'rootView' tip from here
+- (void) tapBehindFired:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        
+        UIView *rootView = self.view.window.rootViewController.view;
+        CGPoint location = [sender locationInView:rootView];
+        
+        if (![self.view pointInside:[self.view convertPoint:location fromView:rootView] withEvent:nil]) {
+            [self.view.window removeGestureRecognizer:sender];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+
+//        CGPoint location = [sender locationInView:self.view];
+//        
+//        if (![self.view pointInside:location withEvent:nil]) {
+//            [self.view.window removeGestureRecognizer:self.tapBehind];
+//            [self dismissViewControllerAnimated:YES completion:nil];
+//        }
+        
+    }
+    NSLog(@"tap behind fired"); // never fires, means problem isn't in this method.. problem is where gesture recognizer added to?
+
+}
+
+
+
+#pragma mark - UIGestureRecognizer Delegate
+
+ // as44a -
+//- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+//    return YES;
+//}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
+}
+
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+//    return YES;
+//}
 
 /*
 #pragma mark - Navigation

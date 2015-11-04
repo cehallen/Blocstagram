@@ -109,17 +109,17 @@ static NSParagraphStyle *paragraphStyle;
         // (visual format string way to 'visually' layout with auto-layout.  notice you refer to the IVAR here not the property...  still unclear about when to use IVAR's, except when overriding the getter or setter methods a la ch29)
         NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView, _usernameAndCaptionLabel, _commentLabel, _likeButton, _commentView);
         
-//        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mediaImageView]|" options:kNilOptions metrics:nil views:viewDictionary]];
         self.horizontallyCompactConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mediaImageView]|" options:kNilOptions metrics:nil views:viewDictionary];
         
         NSLayoutConstraint *widthConstraint = [NSLayoutConstraint constraintWithItem:_mediaImageView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:320];
+        
         NSLayoutConstraint *centerConstraint = [NSLayoutConstraint constraintWithItem:self.contentView
                                                                             attribute:NSLayoutAttributeCenterX
                                                                             relatedBy:0
                                                                                toItem:_mediaImageView
                                                                             attribute:NSLayoutAttributeCenterX
                                                                            multiplier:1
-                                                                             constant:0];
+                                                                             constant:0]; // note how you can center items in another
         
         self.horizontallyRegularConstraints = @[widthConstraint, centerConstraint];
         
@@ -223,7 +223,7 @@ static NSParagraphStyle *paragraphStyle;
     self.separatorInset = UIEdgeInsetsMake(0, CGRectGetWidth(self.bounds)/2.0, 0, CGRectGetWidth(self.bounds)/2.0);
 }
 
-- (UITraitCollection *) traitCollection {
+- (UITraitCollection *) traitCollection {  // note this is a override of the setter for the property traitCollection.  I think we want to override it if the view changes environment?  like an update, because traitCollection is set on load.  maybe.  otherwise I don't get this step
     if (self.overrideTraitCollection) {
         return self.overrideTraitCollection;
     }
@@ -231,7 +231,7 @@ static NSParagraphStyle *paragraphStyle;
     return [super traitCollection];
 }
 
-- (void) traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+- (void) traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {  // ie, called when user rotates device
     if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
         /* It's compact! */
         [self.contentView removeConstraints:self.horizontallyRegularConstraints];
