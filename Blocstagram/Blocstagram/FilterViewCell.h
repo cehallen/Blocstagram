@@ -12,14 +12,17 @@
 
 // as43 - don't think I need these since there are no new methods in this subclass...  just some properties right?
 
-//@protocol FilterViewCellDelegate <NSObject>
-//
-//<#methods#>
-//
-//@end
+@protocol FilterViewCellDelegate <NSObject>
+
+
+
+@end
 
 @interface FilterViewCell : UICollectionViewCell
 
-//@property (nonatomic, weak) id<FilterTableViewCellDelegate> delegate;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) NSString *text;
+@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, weak) id<FilterViewCellDelegate> delegate;
 
 @end
