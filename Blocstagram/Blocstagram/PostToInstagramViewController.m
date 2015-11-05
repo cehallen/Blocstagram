@@ -98,6 +98,13 @@
     
     self.previewImageView.frame = CGRectMake(0, self.topLayoutGuide.length, edgeSize, edgeSize); // topLayoutGuide.length as a y origin will move it past the translucent nav bar and such.  ie, all visible
     
+    // as44b notes
+    /*
+     @"V:[prevView]-space-[newView(==height)]"  notice the -someNumber- part to put spacing between items (for them 'space' is a variable of type int.  from: http://stackoverflow.com/questions/21738523/programmatically-creating-spacing-to-nearest-neighbor-constraint
+     
+     assume the size of the popover is out of my control, so the edgeSize and size of previewImageFrame is not my job here.  just set the size of the filterCollectionView with autolayout.
+     */
+    
     CGFloat buttonHeight = 50;
     CGFloat buffer = 10;
     
