@@ -14,6 +14,7 @@
 		F116E6041BB220B100AC9FD6 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = F116E6031BB220B100AC9FD6 /* Comment.m */; settings = {ASSET_TAGS = (); }; };
 		F116E6071BB2232000AC9FD6 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F116E6061BB2232000AC9FD6 /* DataSource.m */; settings = {ASSET_TAGS = (); }; };
 		F1553D5C1BEBEDEB00E46270 /* UserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F1553D5B1BEBEDEB00E46270 /* UserTests.m */; settings = {ASSET_TAGS = (); }; };
+		F1553D5E1BEBF13400E46270 /* MediaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F1553D5D1BEBF13400E46270 /* MediaTests.m */; settings = {ASSET_TAGS = (); }; };
 		F16FA5BC1BB2E93D00B5C6C9 /* MediaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F16FA5BB1BB2E93D00B5C6C9 /* MediaTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
 		F16FF0FE1BD18748000C16EF /* ComposeCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = F16FF0FD1BD18748000C16EF /* ComposeCommentView.m */; settings = {ASSET_TAGS = (); }; };
 		F17E3BBE1BC7F6CA0075CA99 /* CircleSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F17E3BBD1BC7F6CA0075CA99 /* CircleSpinnerView.m */; settings = {ASSET_TAGS = (); }; };
@@ -66,6 +67,7 @@
 		F116E6051BB2232000AC9FD6 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
 		F116E6061BB2232000AC9FD6 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
 		F1553D5B1BEBEDEB00E46270 /* UserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTests.m; sourceTree = "<group>"; };
+		F1553D5D1BEBF13400E46270 /* MediaTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTests.m; sourceTree = "<group>"; };
 		F16FA5BA1BB2E93D00B5C6C9 /* MediaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaTableViewCell.h; sourceTree = "<group>"; };
 		F16FA5BB1BB2E93D00B5C6C9 /* MediaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTableViewCell.m; sourceTree = "<group>"; };
 		F16FF0FC1BD18748000C16EF /* ComposeCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeCommentView.h; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				F186919A1BB1016C0054A914 /* BlocstagramTests.m */,
 				F186919C1BB1016C0054A914 /* Info.plist */,
 				F1553D5B1BEBEDEB00E46270 /* UserTests.m */,
+				F1553D5D1BEBF13400E46270 /* MediaTests.m */,
 			);
 			path = BlocstagramTests;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1553D5E1BEBF13400E46270 /* MediaTests.m in Sources */,
 				F1553D5C1BEBEDEB00E46270 /* UserTests.m in Sources */,
 				F186919B1BB1016C0054A914 /* BlocstagramTests.m in Sources */,
 			);
@@ -578,6 +582,20 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = BlocstagramTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFNetworking\"",
+					"-l\"UICKeyChainStore\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Bloc.BlocstagramTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Blocstagram.app/Blocstagram";
