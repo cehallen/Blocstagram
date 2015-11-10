@@ -259,6 +259,7 @@
     }
     
     [self presentViewController:fullScreenVC animated:YES completion:nil];
+    
 }
 
 - (void) cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView {

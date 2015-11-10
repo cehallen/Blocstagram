@@ -63,7 +63,8 @@
     [self.tapBehind setCancelsTouchesInView:NO];
     self.tapBehind.delegate = self;
 //    [self.view.window.rootViewController.view addGestureRecognizer:self.tapBehind];
-    [self.view.window addGestureRecognizer:self.tapBehind];
+    [[[UIApplication sharedApplication] keyWindow] addGestureRecognizer:self.tapBehind];
+//    [self.view.window addGestureRecognizer:self.tapBehind];r
 //    [self.view addGestureRecognizer:self.tapBehind];
     
 }
@@ -167,7 +168,7 @@
         CGPoint location = [sender locationInView:rootView];
         
         if (![self.view pointInside:[self.view convertPoint:location fromView:rootView] withEvent:nil]) {
-            [self.view.window removeGestureRecognizer:sender];
+            [[[UIApplication sharedApplication] keyWindow] removeGestureRecognizer:sender];
             [self dismissViewControllerAnimated:YES completion:nil];
         }
 
