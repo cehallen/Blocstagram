@@ -10,4 +10,8 @@
 
 @interface FilterViewCell : UICollectionViewCell
 
+@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, strong) UIImageView *thumbnail;
+@property (nonatomic, strong) UILabel *label;
+
 @end
