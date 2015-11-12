@@ -27,7 +27,6 @@
 
 // "all methods beginning with 'test' are considered tests and will run once each"
 // "other methods are ignored unless you call them"
-
 - (void)testThatInitializationWorks
 {
     NSDictionary *sourceDictionary = @{@"id": @"8675309",

@@ -68,6 +68,8 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
     NSString *urlString = request.URL.absoluteString;
     if ([urlString hasPrefix:[self redirectURI]]) {
         // This contains our auth token
+        
+        // notes: confusing.. what happens is instagram gives you an access token and then redirects you to a certain url.  we don't actually want to go there so we return NO.  if you do get that redirect though, it means you got an access token for the insta user you logged in for appended to the redirect URL..  so we grab that, and send access token to notification center to trigger loading of ImagesTableViewController.  here the notification is POSTED.  in other places (appDelegate) there is an observer for this notification set up, which runs a block of code whenever that notification is fired (from here).  it loads the ImagesTableVC, as I said before.
         NSRange rangeOfAccessTokenParameter = [urlString rangeOfString:@"access_token="];
         NSUInteger indexOfTokenStarting = rangeOfAccessTokenParameter.location + rangeOfAccessTokenParameter.length;
         NSString *accessToken = [urlString substringFromIndex:indexOfTokenStarting];
