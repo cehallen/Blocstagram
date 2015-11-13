@@ -208,7 +208,13 @@
 - (UICollectionViewCell*) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     FilterViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    cell.flowLayout = (UICollectionViewFlowLayout *)self.filterCollectionView.collectionViewLayout;
+    
+    
+//    cell.flowLayout = (UICollectionViewFlowLayout *)self.filterCollectionView.collectionViewLayout; // doesn't work, need to send the thumbnail edge size instead
+    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.filterCollectionView.collectionViewLayout;
+    cell.thumbnailEdgeSize = flowLayout.itemSize.width;
+    
+    
     cell.thumbnail.image = self.filterImages[indexPath.row];
     cell.label.text = self.filterTitles[indexPath.row];
     
