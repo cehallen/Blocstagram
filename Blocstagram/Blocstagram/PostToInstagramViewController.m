@@ -73,11 +73,11 @@
     [self.view addSubview:self.previewImageView];
     [self.view addSubview:self.filterCollectionView];
     
-    if (CGRectGetHeight(self.view.frame) > 500) {
-        [self.view addSubview:self.sendButton];
-    } else {
-        self.navigationItem.rightBarButtonItem = self.sendBarButton;
-    }
+//    if (CGRectGetHeight(self.view.frame) > 500) {
+//        [self.view addSubview:self.sendButton];  // this getting called even though popover is onscreen.  we need the size of the popover.. not the whole screen.
+//    } else {
+//        self.navigationItem.rightBarButtonItem = self.sendBarButton;
+//    }
     
     [self.filterCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     
@@ -89,6 +89,13 @@
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
+    
+    // moved here from viewDidLoad because up there is was taking the self.view.frame as the whole screen..  when here it's correct in taking the size of the popover.  maybe the popover hadn't loaded until here or something.  maybe my reasoning is wrong.  at least it's working now.
+    if (CGRectGetHeight(self.view.frame) > 500) {
+        [self.view addSubview:self.sendButton];
+    } else {
+        self.navigationItem.rightBarButtonItem = self.sendBarButton;
+    }
     
     CGFloat edgeSize = MIN(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
     
@@ -108,8 +115,12 @@
         self.sendButton.frame = CGRectMake(buffer, CGRectGetHeight(self.view.frame) - buffer - buttonHeight, CGRectGetWidth(self.view.frame) - 2 * buffer, buttonHeight);
         
         filterViewHeight = CGRectGetHeight(self.view.frame) - filterViewYOrigin - buffer - buffer - CGRectGetHeight(self.sendButton.frame);
+        
+//        NSLog(@"filter view height (sendButton version): %f", filterViewHeight);
     } else {
         filterViewHeight = CGRectGetHeight(self.view.frame) - CGRectGetMaxY(self.previewImageView.frame) - buffer - buffer;
+        
+//        NSLog(@"filter view height(sendBarButton version): %f", filterViewHeight);
     }
     
     self.filterCollectionView.frame = CGRectMake(0, filterViewYOrigin, CGRectGetWidth(self.view.frame), filterViewHeight);

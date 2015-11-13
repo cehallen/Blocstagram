@@ -189,6 +189,7 @@
     if (imageVC) {
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:imageVC];
         
+        // How does the imageVC know when to use popover (iPad) and not (other smaller devices)?
         nav.modalPresentationStyle = UIModalPresentationPopover;
         UIPopoverPresentationController *popoverController = nav.popoverPresentationController;
         popoverController.barButtonItem = sender;
