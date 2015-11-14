@@ -12,7 +12,7 @@
 @implementation Comment
 
 - (instancetype) initWithDictionary:(NSDictionary *)commentDictionary {
-    self = [super init];
+    self = [super init];  // notice how you can override the vanilla init and customize it even customize the name (initWithDictionary isn't out of the box iOS).  how do we know it is called then??  A: it's called in Media.m!!  so we declare the method initWithDict in .h, define it here in .m, and call it somewhere else to make a comment (in Media.m).  ie, just like any other method.  tada.  with the important difference we call the superclass's init, to make sure we get all the NSObject characteristics we need too.  
     
     if (self) {
         self.idNumber = commentDictionary[@"id"];
